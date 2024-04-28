@@ -20,10 +20,18 @@ class CreateUsuarioTable extends Migration
 
             $table->foreignId('rol_id')->constrained('rol');
 
-            $table->string('nombre_usuario', 50);
-            $table->string('nombre', 50);
-            $table->string('email', 50);
-            $table->string('contrasena', 100);
+            $table->string('nombre_usuario', 50)
+            ->unique();
+
+            $table->string('nombre', 50)
+            ->nullable();
+
+            $table->string('email', 50)
+            ->nullable();
+
+            $table->string('contrasena', 100)
+            ->nullable();
+
 
         });
     }

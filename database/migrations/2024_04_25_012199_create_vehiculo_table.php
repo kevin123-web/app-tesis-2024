@@ -22,12 +22,24 @@ class CreateVehiculoTable extends Migration
             $table->foreignId('estado_id')->constrained('estado');
 
             
-            $table->string('placa', 10);
-            $table->string('marca', 20);
-            $table->string('modelo', 20);
-            $table->integer('anio');
-            $table->string('tipo_contrato', 50);
-            $table->integer('capacidad');
+            $table->string('placa', 10)
+            ->nullable()
+            ->unique();
+
+            $table->string('marca', 20)
+            ->nullable();
+            
+            $table->string('modelo', 20)
+            ->nullable();
+
+            $table->integer('anio')
+            ->nullable();
+
+            $table->string('tipo_contrato', 50)
+            ->nullable();
+
+            $table->integer('capacidad')
+            ->default(0);
 
         });
     }

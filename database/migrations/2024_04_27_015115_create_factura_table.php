@@ -26,10 +26,18 @@ class CreateFacturaTable extends Migration
 
 
             $table->date('fecha');
-            $table->double('subtotal',800, 2);
-            $table->double('total',800, 2);
-            $table->boolean('con_iva');
-            $table->boolean('servicio');
+
+            $table->double('subtotal',800, 2)
+            ->default(0);
+
+            $table->double('total',800, 2)
+            ->default(0);
+
+            $table->boolean('con_iva')
+            ->default("FALSE");
+
+            $table->boolean('servicio')
+            ->default("FALSE");
         });
     }
 

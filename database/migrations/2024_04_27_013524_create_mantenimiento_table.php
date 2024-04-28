@@ -21,11 +21,17 @@ class CreateMantenimientoTable extends Migration
             $table->foreignId('vehiculo_id')->constrained('vehiculo');
             $table->foreignId('mantenimiento_detalle_id')->constrained('mantenimiento_detalle');
             $table->foreignId('maquinaria_id')->constrained('maquinaria');
+            $table->foreignId('tipo_mantenimiento_id')->constrained('tipo_mantenimiento');
+            $table->foreignId('tipo_intervalo_id')->constrained('tipo_intervalo');
 
             
             $table->date('fecha_mantenimiento');
-            $table->double('costo_mantenimiento',800, 2);
-            $table->string('intervalo_mantenimiento', 50);
+            
+            $table->double('costo_mantenimiento',800, 2)
+            ->default(0);
+
+            $table->integer('intervalo_numero')
+            ->default(0);
 
         });
     }
