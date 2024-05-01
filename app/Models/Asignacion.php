@@ -1,0 +1,33 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Asignacion extends Model
+{
+    use HasFactory;
+    use SoftDeletes;
+
+    protected $table = 'asignacion';
+
+    protected $fillable = [
+        'fecha'
+    ];
+
+    public function ruta()
+    {
+        return $this->belongsTo(Ruta::class);
+    }
+
+    public function ConductorVehiculo()
+    {
+        return $this->belongsTo(conductorVehiculo::class);
+    }
+
+    public function envios()
+    {
+        return $this->hasMany(Envios::class);
+    }
+}
