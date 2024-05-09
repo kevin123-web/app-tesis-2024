@@ -20,10 +20,10 @@ class CreatePersonaTable extends Migration
 
             $table->foreignId('tipo_identificacion_id')->constrained('tipo_identificacion');
 
-            $table->string('nombre', 10);
+            $table->string('nombre');
             $table->string('cedula', 10);
-            $table->string('email', 10);
-            $table->string('Sexo', 9);
+            $table->string('email');
+            $table->string('Sexo');
             $table->text('direccion');
             $table->string('celular', 10);
         });

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Vehiculo extends Model
 {
@@ -19,6 +20,11 @@ class Vehiculo extends Model
     public function TipoVehiculo()
     {
         return $this->belongsTo(tipoVehiculo::class);
+    }
+
+    public function estado()
+    {
+        return $this->belongsTo(Estado::class);
     }
 
     public function conductores()

@@ -26,16 +26,16 @@ class CreateVehiculoTable extends Migration
             ->nullable()
             ->unique();
 
-            $table->string('marca', 20)
+            $table->string('marca')
             ->nullable();
             
-            $table->string('modelo', 20)
+            $table->string('modelo')
             ->nullable();
 
             $table->integer('anio')
             ->nullable();
 
-            $table->string('tipo_contrato', 50)
+            $table->string('tipo_contrato')
             ->nullable();
 
             $table->integer('capacidad')

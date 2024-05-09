@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Conductor extends Model
 {
@@ -13,7 +14,7 @@ class Conductor extends Model
     protected $table = 'conductor';
 
     protected $fillable = [
-        'liciencia_conducir', 'hacer_user'
+        'licencia_conducir', 'hacer_user'
     ];
 
     public function persona()

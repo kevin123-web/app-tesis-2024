@@ -21,7 +21,7 @@ class CreateConductorTable extends Migration
             $table->foreignId('persona_id')->constrained('persona');
             $table->foreignId('estado_id')->constrained('estado');
             
-            $table->string('liciencia_conducir', 10)
+            $table->string('licencia_conducir', 10)
             ->nullable()
             ->unique();
 
