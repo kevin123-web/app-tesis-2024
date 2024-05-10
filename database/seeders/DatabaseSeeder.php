@@ -52,10 +52,6 @@ class DatabaseSeeder extends Seeder
         Rol::factory()->count(10)->create();
         tipoPago::factory()->count(10)->create();
 
-
-
-
-
         $faker = Faker::create(); 
 
         for ($i = 0; $i < 10; $i++) {
