@@ -136,19 +136,6 @@ class DatabaseSeeder extends Seeder
         }
 
         for ($i = 0; $i < 10; $i++) {
-            Mantenimiento::create([
-                'vehiculo_id' => random_int(1, 10), 
-                'mantenimiento_detalle_id' => random_int(1, 10),
-                'maquinaria_id' => random_int(1, 10), 
-                'tipo_mantenimiento_id' => random_int(1, 10), 
-                'tipo_intervalo_id' => random_int(1, 10), 
-                'fecha_mantenimiento' => $faker->date(), 
-                'costo_mantenimiento' => $faker->randomFloat(2, 0, 800), 
-                'intervalo_numero' => $faker->numberBetween(0, 100), 
-            ]);
-        }
-
-        for ($i = 0; $i < 10; $i++) {
             Usuario::create([
                 'rol_id' => random_int(1, 10), 
                 'nombre_usuario' => $faker->userName(), 

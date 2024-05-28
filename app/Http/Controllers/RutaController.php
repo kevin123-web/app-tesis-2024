@@ -3,33 +3,33 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Conductor;
+use App\Models\Ruta;
 
 
-class ConductorController extends Controller
+class RutaController extends Controller
 {
     public function index()
     {
-        $conductores = Conductor::get();
+        $rutas = Ruta::get();
         return response()->json(
             [
                 'msg' => [
-                    'summary' => 'Consulta de la asignación',
-                    'detail' => 'La asignación se consulto  correctamente',
+                    'summary' => 'Consulta del estado',
+                    'detail' => 'El estado se consulto  correctamente',
                 ],
-                'data' => $conductores
+                'data' => $rutas
             ]
         );
     }
 
     public function show($id)
     {
-        $conductores = Conductor::find($id);
-        if (!$conductores) {
+        $rutas = Ruta::find($id);
+        if (!$rutas) {
             return response()->json([
                 'msg' => [
-                    'summary' => 'Asignación no encontrada',
-                    'detail' => ' La asignación con el ID proporcionado no fue encontrado',
+                    'summary' => 'Estado no encontrado',
+                    'detail' => 'El estado con el ID proporcionado no fue encontrado',
                 ],
                 'data' => null
             ], 404);
@@ -37,30 +37,31 @@ class ConductorController extends Controller
     
         return response()->json([
             'msg' => [
-                'summary' => 'Consulta de la asignación',
-                'detail' => 'La asignación se consulto  correctamente',
+                'summary' => 'Consulta de estado',
+                'detail' => 'El estado se consultó correctamente',
             ],
-            'data' => $conductores
+            'data' => $rutas
         ]);
     }
-    
+
     public function store(Request $request)
     {
         // Validar los datos de entrada
         $request->validate([
             'estado_id' => 'required|integer|exists:estado,id',
-            'persona_id' => 'required|integer|exists:persona,id',
-            'licencia_conducir' => 'required|string|max:20',
-            'hacer_user' => 'required|boolean',
-
+            'ubicacion_origen_id' => 'required|integer|exists:ubicacion_origen,id',
+            'ubicacion_destino_id' => 'required|integer|exists:ubicacion_destino,id',
+            'tiempo_estimado' => 'required|string',
+            'distancia' => 'required|integer',
         ]);
 
         // Crear la nueva asignación
-        $conductores = Conductor::create([
+        $rutas = Ruta::create([
             'estado_id' => $request->input('estado_id'),
-            'persona_id' => $request->input('persona_id'),
-            'licencia_conducir' => $request->input('licencia_conducir'),
-            'hacer_user' => $request->input('hacer_user'),
+            'ubicacion_origen_id' => $request->input('ubicacion_origen_id'),
+            'ubicacion_destino_id' => $request->input('ubicacion_destino_id'),
+            'tiempo_estimado' => $request->input('tiempo_estimado'),
+            'distancia' => $request->input('distancia'),
         ]);
 
         // Retornar la respuesta en formato JSON
@@ -69,42 +70,42 @@ class ConductorController extends Controller
                 'summary' => 'Asignación creada',
                 'detail' => 'La asignación se creó correctamente',
             ],
-            'data' => $conductores
+            'data' => $rutas
         ], 201);
     }
 
     public function update(Request $request, $id)
     {
-        $conductores = Conductor::findOrFail($id);
-    
+        $rutas = Ruta::findOrFail($id);
+
         // Validación para todos los campos, pero permitiendo que algunos sean opcionales
         $validatedData = $request->validate([
             'estado_id' => 'sometimes|integer|exists:estado,id',
-            'persona_id' => 'sometimes|integer|exists:persona,id',
-            'licencia_conducir' => 'sometimes|string|max:20',
-            'hacer_user' => 'sometimes|boolean',
+            'ubicacion_origen_id' => 'sometimes|integer|exists:ubicacion_origen,id',
+            'ubicacion_destino_id' => 'sometimes|integer|exists:ubicacion_destino,id',
+            'tiempo_estimado' => 'sometimes|string',
+            'distancia' => 'sometimes|integer',
         ]);
-    
+
         // Actualizar solo los campos que están presentes en la solicitud
-        $conductores->update($validatedData);
-    
+        $rutas->update($validatedData);
+
         return response()->json([
             'msg' => [
                 'summary' => 'Actualización de la asignación',
                 'detail' => 'La asignación se actualizó correctamente',
             ],
-            'data' => $conductores
+            'data' => $rutas
         ]);
     }
-    
 
     public function destroy($id)
     {
         // Buscar la asignación por su ID
-        $conductores = Conductor::findOrFail($id);
+        $rutas = Ruta::findOrFail($id);
 
         // Eliminar la asignación
-        $conductores->delete();
+        $rutas->delete();
 
         // Retornar la respuesta en formato JSON
         return response()->json([
@@ -112,7 +113,7 @@ class ConductorController extends Controller
                 'summary' => 'Asignación eliminada',
                 'detail' => 'La asignación se eliminó correctamente',
             ],
-            'data' => $conductores
+            'data' => $rutas
         ]);
     }
 }

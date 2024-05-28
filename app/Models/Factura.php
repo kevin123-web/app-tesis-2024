@@ -14,7 +14,15 @@ class Factura extends Model
     protected $table = 'factura';
 
     protected $fillable = [
-        'fecha', 'subtotal', 'total', 'con_iva', 'servicio'
+        'cliente_id',
+        'envio_id',
+        'estado_id',
+        'tipo_pago_id',
+        'fecha', 
+        'subtotal', 
+        'total', 
+        'con_iva', 
+        'servicio'
     ];
 
     public function cliente()

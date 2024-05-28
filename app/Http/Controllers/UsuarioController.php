@@ -43,4 +43,79 @@ class UsuarioController extends Controller
             'data' => $usuarios
         ]);
     }
+
+    public function store(Request $request)
+    {
+        // Validar los datos de entrada
+        $request->validate([
+            'rol_id' => 'required|integer|exists:rol,id',
+            'nombre_usuario' => 'required|string',
+            'nombre' => 'required|string|max:50',
+            'email' => 'required|email',
+            'contrasena' => 'required|string',
+
+        ]);
+
+        // Crear la nueva asignación
+        $usuarios = Usuario::create([
+            'rol_id' => $request->input('rol_id'),
+            'nombre_usuario' => $request->input('nombre_usuario'),
+            'nombre' => $request->input('nombre'),
+            'email' => $request->input('email'),
+            'contrasena' => $request->input('contrasena'),
+
+        ]);
+
+        // Retornar la respuesta en formato JSON
+        return response()->json([
+            'msg' => [
+                'summary' => 'Asignación creada',
+                'detail' => 'La asignación se creó correctamente',
+            ],
+            'data' => $usuarios
+        ], 201);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $usuarios = Usuario::findOrFail($id);
+
+        // Validación para todos los campos, pero permitiendo que algunos sean opcionales
+        $validatedData = $request->validate([
+            'rol_id' => 'sometimes|integer|exists:rol,id',
+            'nombre_usuario' => 'sometimes|string',
+            'nombre' => 'sometimes|string|max:50',
+            'email' => 'sometimes|email',
+            'contrasena' => 'sometimes|string',
+        ]);
+
+        // Actualizar solo los campos que están presentes en la solicitud
+        $usuarios->update($validatedData);
+
+        return response()->json([
+            'msg' => [
+                'summary' => 'Actualización de la asignación',
+                'detail' => 'La asignación se actualizó correctamente',
+            ],
+            'data' => $usuarios
+        ]);
+    }
+
+    public function destroy($id)
+    {
+        // Buscar la asignación por su ID
+        $usuarios = Usuario::findOrFail($id);
+
+        // Eliminar la asignación
+        $usuarios->delete();
+
+        // Retornar la respuesta en formato JSON
+        return response()->json([
+            'msg' => [
+                'summary' => 'Asignación eliminada',
+                'detail' => 'La asignación se eliminó correctamente',
+            ],
+            'data' => $usuarios
+        ]);
+    }
 }

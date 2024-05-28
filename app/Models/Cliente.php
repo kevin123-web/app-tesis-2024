@@ -14,7 +14,9 @@ class Cliente extends Model
     protected $table = 'cliente';
 
     protected $fillable = [
-        'fecha_registro', 'tipo_cliente'
+        'persona_id',
+        'fecha_registro', 
+        'tipo_cliente'
     ];
 
     public function persona()

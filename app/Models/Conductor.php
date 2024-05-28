@@ -14,7 +14,10 @@ class Conductor extends Model
     protected $table = 'conductor';
 
     protected $fillable = [
-        'licencia_conducir', 'hacer_user'
+        'estado_id',
+        'persona_id',
+        'licencia_conducir', 
+        'hacer_user'
     ];
 
     public function persona()

@@ -14,7 +14,8 @@ class mantenimientoDetalle extends Model
     protected $table = 'mantenimiento_detalle';
 
     protected $fillable = [
-        'nombre',
+        'descripcion',
+        'observacion'
     ];
 
     public function mantenimientos()

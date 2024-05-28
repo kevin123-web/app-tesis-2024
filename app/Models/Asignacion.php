@@ -14,6 +14,8 @@ class Asignacion extends Model
     protected $table = 'asignacion';
 
     protected $fillable = [
+        'ruta_id', 
+        'conductor_vehiculo_id', 
         'fecha'
     ];
 

@@ -14,7 +14,14 @@ class Envios extends Model
     protected $table = 'envios';
 
     protected $fillable = [
-        'descripcion', 'peso_mercancia', 'fecha_recogida', 'fecha_entrega'
+        'cliente_id',
+        'asignacion_id',
+        'servicio_id',
+        'estado_id',
+        'descripcion', 
+        'peso_mercancia', 
+        'fecha_recogida', 
+        'fecha_entrega'
     ];
 
     public function cliente()

@@ -14,7 +14,10 @@ class Usuario extends Model
     protected $table = 'usuario';
 
     protected $fillable = [
-        'nombre_usuario', 'nombre', 'email', 'contrasena'
+        'rol_id',
+        'nombre_usuario', 
+        'nombre', 'email', 
+        'contrasena'
     ];
 
     public function rol()

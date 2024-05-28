@@ -14,7 +14,8 @@ class conductorVehiculo extends Model
     protected $table = 'conductor_vehiculo';
 
     protected $fillable = [
-        
+        'conductor_id',
+        'vehiculo_id'
     ];
 
     public function asignaciones()

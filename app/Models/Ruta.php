@@ -14,7 +14,11 @@ class Ruta extends Model
     protected $table = 'ruta';
 
     protected $fillable = [
-        'tiempo_estimado', 'distancia'
+        'estado_id',
+        'ubicacion_origen_id',
+        'ubicacion_destino_id',
+        'tiempo_estimado', 
+        'distancia'
     ];
 
     public function estado()

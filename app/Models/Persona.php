@@ -14,7 +14,13 @@ class Persona extends Model
     protected $table = 'persona';
 
     protected $fillable = [
-        'nombre', 'cedula', 'email', 'Sexo', 'direccion', 'celular'
+        'tipo_identificacion_id',
+        'nombre', 
+        'cedula', 
+        'email', 
+        'Sexo', 
+        'direccion', 
+        'celular'
     ];
 
     public function TipoIdentificacion()

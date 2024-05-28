@@ -23,8 +23,7 @@ class CreateEnviosTable extends Migration
             $table->foreignId('servicio_id')->constrained('servicio');
             $table->foreignId('estado_id')->constrained('estado');
 
-            $table->text('descripcion')
-            ->nullable();
+            $table->string('descripcion');
 
             $table->double('peso_mercancia' ,800, 2)
             ->default(0);

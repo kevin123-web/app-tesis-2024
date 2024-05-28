@@ -14,7 +14,14 @@ class Vehiculo extends Model
     protected $table = 'vehiculo';
 
     protected $fillable = [
-        'placa', 'marca', 'modelo', 'anio', 'tipo_contrato', 'capacidad'
+        'tipo_vehiculo_id',
+        'estado_id',
+        'placa', 
+        'marca', 
+        'modelo', 
+        'anio', 
+        'tipo_contrato', 
+        'capacidad'
     ];
 
     public function TipoVehiculo()
