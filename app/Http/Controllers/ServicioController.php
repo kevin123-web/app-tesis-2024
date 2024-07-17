@@ -10,26 +10,24 @@ class ServicioController extends Controller
 {
     public function index()
     {
-        $servicios = Servicio::get();
-        return response()->json(
-            [
-                'msg' => [
-                    'summary' => 'Consulta de la asignación',
-                    'detail' => 'La asignación se consulto  correctamente',
-                ],
-                'data' => $servicios
-            ]
-        );
+        $servicios = Servicio::all();
+        return response()->json([
+            'msg' => [
+                'summary' => 'Consulta de servicios',
+                'detail' => 'Los servicios se consultaron correctamente.',
+            ],
+            'data' => $servicios
+        ]);
     }
 
     public function show($id)
     {
-        $servicios = Servicio::find($id);
-        if (!$servicios) {
+        $servicio = Servicio::find($id);
+        if (!$servicio) {
             return response()->json([
                 'msg' => [
-                    'summary' => 'Asignación no encontrada',
-                    'detail' => ' La asignación con el ID proporcionado no fue encontrado',
+                    'summary' => 'Servicio no encontrado',
+                    'detail' => 'No se encontró el servicio con el ID proporcionado.',
                 ],
                 'data' => null
             ], 404);
@@ -37,10 +35,10 @@ class ServicioController extends Controller
     
         return response()->json([
             'msg' => [
-                'summary' => 'Consulta de la asignación',
-                'detail' => 'La asignación se consulto  correctamente',
+                'summary' => 'Consulta de servicio',
+                'detail' => 'El servicio se consultó correctamente.',
             ],
-            'data' => $servicios
+            'data' => $servicio
         ]);
     }
 
@@ -51,57 +49,57 @@ class ServicioController extends Controller
             'nombre' => 'required|string',
         ]);
 
-        // Crear la nueva asignación
-        $servicios = Servicio::create([
+        // Crear el nuevo servicio
+        $servicio = Servicio::create([
             'nombre' => $request->input('nombre'),
         ]);
 
         // Retornar la respuesta en formato JSON
         return response()->json([
             'msg' => [
-                'summary' => 'Asignación creada',
-                'detail' => 'La asignación se creó correctamente',
+                'summary' => 'Servicio creado',
+                'detail' => 'El servicio se creó correctamente.',
             ],
-            'data' => $servicios
+            'data' => $servicio
         ], 201);
     }
 
     public function update(Request $request, $id)
     {
-        $servicios = Servicio::findOrFail($id);
+        $servicio = Servicio::findOrFail($id);
 
-        // Validación para todos los campos, pero permitiendo que algunos sean opcionales
+        // Validación para campos opcionales
         $validatedData = $request->validate([
             'nombre' => 'sometimes|string',
         ]);
 
         // Actualizar solo los campos que están presentes en la solicitud
-        $servicios->update($validatedData);
+        $servicio->update($validatedData);
 
         return response()->json([
             'msg' => [
-                'summary' => 'Actualización de la asignación',
-                'detail' => 'La asignación se actualizó correctamente',
+                'summary' => 'Servicio actualizado',
+                'detail' => 'El servicio se actualizó correctamente.',
             ],
-            'data' => $servicios
+            'data' => $servicio
         ]);
     }
 
     public function destroy($id)
     {
-        // Buscar la asignación por su ID
-        $servicios = Servicio::findOrFail($id);
+        // Buscar el servicio por su ID
+        $servicio = Servicio::findOrFail($id);
 
-        // Eliminar la asignación
-        $servicios->delete();
+        // Eliminar el servicio
+        $servicio->delete();
 
         // Retornar la respuesta en formato JSON
         return response()->json([
             'msg' => [
-                'summary' => 'Asignación eliminada',
-                'detail' => 'La asignación se eliminó correctamente',
+                'summary' => 'Servicio eliminado',
+                'detail' => 'El servicio se eliminó correctamente.',
             ],
-            'data' => $servicios
+            'data' => $servicio
         ]);
     }
 }

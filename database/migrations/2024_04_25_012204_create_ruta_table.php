@@ -18,14 +18,11 @@ class CreateRutaTable extends Migration
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreignId('estado_id')->constrained('estado');
             $table->foreignId('ubicacion_origen_id')->constrained('ubicacion_origen');
             $table->foreignId('ubicacion_destino_id')->constrained('ubicacion_destino');
 
-
-            $table->string('tiempo_estimado', 20);
-            $table->integer('distancia')
-            ->default(0);
+            $table->string('distancia');
+            $table->string('duracion');
       
 
                    

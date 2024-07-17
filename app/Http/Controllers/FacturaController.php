@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Factura;
 
-
 class FacturaController extends Controller
 {
     public function index()
@@ -14,8 +13,8 @@ class FacturaController extends Controller
         return response()->json(
             [
                 'msg' => [
-                    'summary' => 'Consulta de la asignación',
-                    'detail' => 'La asignación se consulto  correctamente',
+                    'summary' => 'Lista de facturas',
+                    'detail' => 'Se consultaron las facturas correctamente.',
                 ],
                 'data' => $facturas
             ]
@@ -24,12 +23,12 @@ class FacturaController extends Controller
 
     public function show($id)
     {
-        $facturas = Factura::find($id);
-        if (!$facturas) {
+        $factura = Factura::find($id);
+        if (!$factura) {
             return response()->json([
                 'msg' => [
-                    'summary' => 'Asignación no encontrada',
-                    'detail' => ' La asignación con el ID proporcionado no fue encontrado',
+                    'summary' => 'Factura no encontrada',
+                    'detail' => 'No se encontró una factura con el ID proporcionado.',
                 ],
                 'data' => null
             ], 404);
@@ -37,10 +36,10 @@ class FacturaController extends Controller
     
         return response()->json([
             'msg' => [
-                'summary' => 'Consulta de la asignación',
-                'detail' => 'La asignación se consulto  correctamente',
+                'summary' => 'Detalles de la factura',
+                'detail' => 'Se consultaron los detalles de la factura correctamente.',
             ],
-            'data' => $facturas
+            'data' => $factura
         ]);
     }
 
@@ -59,8 +58,8 @@ class FacturaController extends Controller
             'servicio' => 'required|boolean',
         ]);
 
-        // Crear la nueva asignación
-        $facturas = Factura::create([
+        // Crear la nueva factura
+        $factura = Factura::create([
             'cliente_id' => $request->input('cliente_id'),
             'envio_id' => $request->input('envio_id'),
             'estado_id' => $request->input('estado_id'),
@@ -75,18 +74,19 @@ class FacturaController extends Controller
         // Retornar la respuesta en formato JSON
         return response()->json([
             'msg' => [
-                'summary' => 'Asignación creada',
-                'detail' => 'La asignación se creó correctamente',
+                'summary' => 'Factura creada',
+                'detail' => 'La factura se creó correctamente.',
             ],
-            'data' => $facturas
+            'data' => $factura
         ], 201);
     }
 
     public function update(Request $request, $id)
     {
-        $facturas = Factura::findOrFail($id);
+        // Buscar la factura por su ID
+        $factura = Factura::findOrFail($id);
 
-        // Validación para todos los campos, pero permitiendo que algunos sean opcionales
+        // Validación para todos los campos
         $validatedData = $request->validate([
             'cliente_id' => 'required|integer|exists:cliente,id',
             'envio_id' => 'required|integer|exists:envios,id',
@@ -99,33 +99,33 @@ class FacturaController extends Controller
             'servicio' => 'required|boolean',
         ]);
 
-        // Actualizar solo los campos que están presentes en la solicitud
-        $facturas->update($validatedData);
+        // Actualizar la factura con los datos proporcionados
+        $factura->update($validatedData);
 
         return response()->json([
             'msg' => [
-                'summary' => 'Actualización de la asignación',
-                'detail' => 'La asignación se actualizó correctamente',
+                'summary' => 'Factura actualizada',
+                'detail' => 'La factura se actualizó correctamente.',
             ],
-            'data' => $facturas
+            'data' => $factura
         ]);
     }
 
     public function destroy($id)
     {
-        // Buscar la asignación por su ID
-        $facturas = Factura::findOrFail($id);
+        // Buscar la factura por su ID
+        $factura = Factura::findOrFail($id);
 
-        // Eliminar la asignación
-        $facturas->delete();
+        // Eliminar la factura
+        $factura->delete();
 
         // Retornar la respuesta en formato JSON
         return response()->json([
             'msg' => [
-                'summary' => 'Asignación eliminada',
-                'detail' => 'La asignación se eliminó correctamente',
+                'summary' => 'Factura eliminada',
+                'detail' => 'La factura se eliminó correctamente.',
             ],
-            'data' => $facturas
+            'data' => $factura
         ]);
     }
 }

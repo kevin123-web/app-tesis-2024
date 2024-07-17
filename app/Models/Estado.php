@@ -27,12 +27,7 @@ class Estado extends Model
     {
         return $this->hasMany(Conductor::class);
     }
-
-    public function rutas()
-    {
-        return $this->hasMany(Ruta::class);
-    }
-
+    
     public function envios()
     {
         return $this->hasMany(Envios::class);

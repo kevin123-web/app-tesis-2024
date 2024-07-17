@@ -10,26 +10,24 @@ class tipoIdentificacionController extends Controller
 {
     public function index()
     {
-        $tipo_identificacion = tipoIdentificacion::get();
-        return response()->json(
-            [
-                'msg' => [
-                    'summary' => 'Consulta de la asignación',
-                    'detail' => 'La asignación se consulto  correctamente',
-                ],
-                'data' => $tipo_identificacion
-            ]
-        );
+        $tiposIdentificacion = tipoIdentificacion::all();
+        return response()->json([
+            'msg' => [
+                'summary' => 'Consulta de tipos de identificación',
+                'detail' => 'Los tipos de identificación se consultaron correctamente.',
+            ],
+            'data' => $tiposIdentificacion
+        ]);
     }
 
     public function show($id)
     {
-        $tipo_identificacion = tipoIdentificacion::find($id);
-        if (!$tipo_identificacion) {
+        $tipoIdentificacion = tipoIdentificacion::find($id);
+        if (!$tipoIdentificacion) {
             return response()->json([
                 'msg' => [
-                    'summary' => 'Asignación no encontrada',
-                    'detail' => ' La asignación con el ID proporcionado no fue encontrado',
+                    'summary' => 'Tipo de identificación no encontrado',
+                    'detail' => 'No se encontró el tipo de identificación con el ID proporcionado.',
                 ],
                 'data' => null
             ], 404);
@@ -37,10 +35,10 @@ class tipoIdentificacionController extends Controller
     
         return response()->json([
             'msg' => [
-                'summary' => 'Consulta de la asignación',
-                'detail' => 'La asignación se consulto  correctamente',
+                'summary' => 'Consulta de tipo de identificación',
+                'detail' => 'El tipo de identificación se consultó correctamente.',
             ],
-            'data' => $tipo_identificacion
+            'data' => $tipoIdentificacion
         ]);
     }
 
@@ -51,57 +49,57 @@ class tipoIdentificacionController extends Controller
             'nombre' => 'required|string',
         ]);
 
-        // Crear la nueva asignación
-        $tipo_identificacion = tipoIdentificacion::create([
+        // Crear el nuevo tipo de identificación
+        $tipoIdentificacion = tipoIdentificacion::create([
             'nombre' => $request->input('nombre'),
         ]);
 
         // Retornar la respuesta en formato JSON
         return response()->json([
             'msg' => [
-                'summary' => 'Asignación creada',
-                'detail' => 'La asignación se creó correctamente',
+                'summary' => 'Tipo de identificación creado',
+                'detail' => 'El tipo de identificación se creó correctamente.',
             ],
-            'data' => $tipo_identificacion
+            'data' => $tipoIdentificacion
         ], 201);
     }
 
     public function update(Request $request, $id)
     {
-        $tipo_identificacion = tipoIdentificacion::findOrFail($id);
+        $tipoIdentificacion = tipoIdentificacion::findOrFail($id);
 
-        // Validación para todos los campos, pero permitiendo que algunos sean opcionales
+        // Validación para campos opcionales
         $validatedData = $request->validate([
             'nombre' => 'sometimes|string',
         ]);
 
         // Actualizar solo los campos que están presentes en la solicitud
-        $tipo_identificacion->update($validatedData);
+        $tipoIdentificacion->update($validatedData);
 
         return response()->json([
             'msg' => [
-                'summary' => 'Actualización de la asignación',
-                'detail' => 'La asignación se actualizó correctamente',
+                'summary' => 'Tipo de identificación actualizado',
+                'detail' => 'El tipo de identificación se actualizó correctamente.',
             ],
-            'data' => $tipo_identificacion
+            'data' => $tipoIdentificacion
         ]);
     }
 
     public function destroy($id)
     {
-        // Buscar la asignación por su ID
-        $tipo_identificacion = tipoIdentificacion::findOrFail($id);
+        // Buscar el tipo de identificación por su ID
+        $tipoIdentificacion = tipoIdentificacion::findOrFail($id);
 
-        // Eliminar la asignación
-        $tipo_identificacion->delete();
+        // Eliminar el tipo de identificación
+        $tipoIdentificacion->delete();
 
         // Retornar la respuesta en formato JSON
         return response()->json([
             'msg' => [
-                'summary' => 'Asignación eliminada',
-                'detail' => 'La asignación se eliminó correctamente',
+                'summary' => 'Tipo de identificación eliminado',
+                'detail' => 'El tipo de identificación se eliminó correctamente.',
             ],
-            'data' => $tipo_identificacion
+            'data' => $tipoIdentificacion
         ]);
     }
 }

@@ -14,8 +14,8 @@ class ClienteController extends Controller
         return response()->json(
             [
                 'msg' => [
-                    'summary' => 'Consulta de la asignación',
-                    'detail' => 'La asignación se consulto  correctamente',
+                    'summary' => 'Consulta del cliente',
+                    'detail' => 'El cliente se consulto  correctamente',
                 ],
                 'data' => $clientes
             ]
@@ -28,8 +28,8 @@ class ClienteController extends Controller
         if (!$clientes) {
             return response()->json([
                 'msg' => [
-                    'summary' => 'Asignación no encontrada',
-                    'detail' => ' La asignación con el ID proporcionado no fue encontrado',
+                    'summary' => 'Cliente no encontrado',
+                    'detail' => ' El cliente con el ID proporcionado no fue encontrado',
                 ],
                 'data' => null
             ], 404);
@@ -37,8 +37,8 @@ class ClienteController extends Controller
     
         return response()->json([
             'msg' => [
-                'summary' => 'Consulta de la asignación',
-                'detail' => 'La asignación se consulto  correctamente',
+                'summary' => 'Consulta del cliente',
+                'detail' => 'El cliente se consulto  correctamente',
             ],
             'data' => $clientes
         ]);
@@ -63,8 +63,8 @@ class ClienteController extends Controller
         // Retornar la respuesta en formato JSON
         return response()->json([
             'msg' => [
-                'summary' => 'Asignación creada',
-                'detail' => 'La asignación se creó correctamente',
+                'summary' => 'Cliente creado',
+                'detail' => 'El cliente se creó correctamente',
             ],
             'data' => $clientes
         ], 201);
@@ -86,8 +86,8 @@ class ClienteController extends Controller
     
         return response()->json([
             'msg' => [
-                'summary' => 'Actualización de la asignación',
-                'detail' => 'La asignación se actualizó correctamente',
+                'summary' => 'Actualización del cliente',
+                'detail' => 'El cliente se actualizó correctamente',
             ],
             'data' => $clientes
         ]);
@@ -104,8 +104,8 @@ class ClienteController extends Controller
         // Retornar la respuesta en formato JSON
         return response()->json([
             'msg' => [
-                'summary' => 'Asignación eliminada',
-                'detail' => 'La asignación se eliminó correctamente',
+                'summary' => 'Cliente eliminado',
+                'detail' => 'El cliente se eliminó correctamente',
             ],
             'data' => $clientes
         ]);

@@ -14,8 +14,8 @@ class conductorVehiculoController extends Controller
         return response()->json(
             [
                 'msg' => [
-                    'summary' => 'Consulta de la asignación',
-                    'detail' => 'La asignación se consulto  correctamente',
+                    'summary' => 'Lista de asignaciones de vehículos',
+                    'detail' => 'Se consultaron las asignaciones de vehículos correctamente.',
                 ],
                 'data' => $conductor_vehiculo
             ]
@@ -28,8 +28,8 @@ class conductorVehiculoController extends Controller
         if (!$conductor_vehiculo) {
             return response()->json([
                 'msg' => [
-                    'summary' => 'Asignación no encontrada',
-                    'detail' => ' La asignación con el ID proporcionado no fue encontrado',
+                    'summary' => 'Asignación de vehículo no encontrada',
+                    'detail' => 'No se encontró una asignación de vehículo con el ID proporcionado.',
                 ],
                 'data' => null
             ], 404);
@@ -37,8 +37,8 @@ class conductorVehiculoController extends Controller
     
         return response()->json([
             'msg' => [
-                'summary' => 'Consulta de la asignación',
-                'detail' => 'La asignación se consulto  correctamente',
+                'summary' => 'Detalles de la asignación de vehículo',
+                'detail' => 'Se consultaron los detalles de la asignación de vehículo correctamente.',
             ],
             'data' => $conductor_vehiculo
         ]);
@@ -61,8 +61,8 @@ class conductorVehiculoController extends Controller
         // Retornar la respuesta en formato JSON
         return response()->json([
             'msg' => [
-                'summary' => 'Asignación creada',
-                'detail' => 'La asignación se creó correctamente',
+                'summary' => 'Asignación de vehículo creada',
+                'detail' => 'La asignación de vehículo se creó correctamente.',
             ],
             'data' => $conductor_vehiculo
         ], 201);
@@ -70,7 +70,7 @@ class conductorVehiculoController extends Controller
 
     public function update(Request $request, $id)
     {
-        $conductor_vehiculo = conductorVehiculo::findOrFail($id);
+        $conductorVehiculo = conductorVehiculo::findOrFail($id);
 
         // Validación para todos los campos, pero permitiendo que algunos sean opcionales
         $validatedData = $request->validate([
@@ -83,8 +83,8 @@ class conductorVehiculoController extends Controller
 
         return response()->json([
             'msg' => [
-                'summary' => 'Actualización de la asignación',
-                'detail' => 'La asignación se actualizó correctamente',
+                'summary' => 'Asignación de vehículo actualizada',
+                'detail' => 'Los datos de la asignación de vehículo se actualizaron correctamente.',
             ],
             'data' => $conductor_vehiculo
         ]);
@@ -101,10 +101,11 @@ class conductorVehiculoController extends Controller
         // Retornar la respuesta en formato JSON
         return response()->json([
             'msg' => [
-                'summary' => 'Asignación eliminada',
-                'detail' => 'La asignación se eliminó correctamente',
+                'summary' => 'Asignación de vehículo eliminada',
+                'detail' => 'La asignación de vehículo se eliminó correctamente.',
             ],
             'data' => $conductor_vehiculo
         ]);
     }
 }
+

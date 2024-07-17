@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Envios;
 
-
 class EnviosController extends Controller
 {
     public function index()
@@ -14,8 +13,8 @@ class EnviosController extends Controller
         return response()->json(
             [
                 'msg' => [
-                    'summary' => 'Consulta de la asignación',
-                    'detail' => 'La asignación se consulto  correctamente',
+                    'summary' => 'Lista de envíos',
+                    'detail' => 'Se consultaron los envíos correctamente.',
                 ],
                 'data' => $envio
             ]
@@ -28,8 +27,8 @@ class EnviosController extends Controller
         if (!$envio) {
             return response()->json([
                 'msg' => [
-                    'summary' => 'Asignación no encontrada',
-                    'detail' => ' La asignación con el ID proporcionado no fue encontrado',
+                    'summary' => 'Envío no encontrado',
+                    'detail' => 'No se encontró un envío con el ID proporcionado.',
                 ],
                 'data' => null
             ], 404);
@@ -37,8 +36,8 @@ class EnviosController extends Controller
     
         return response()->json([
             'msg' => [
-                'summary' => 'Consulta de la asignación',
-                'detail' => 'La asignación se consulto  correctamente',
+                'summary' => 'Detalles del envío',
+                'detail' => 'Se consultaron los detalles del envío correctamente.',
             ],
             'data' => $envio
         ]);
@@ -58,7 +57,7 @@ class EnviosController extends Controller
             'fecha_entrega' => 'required|date',
         ]);
 
-        // Crear la nueva asignación
+        // Crear el nuevo envío
         $envio = Envios::create([
             'cliente_id' => $request->input('cliente_id'),
             'asignacion_id' => $request->input('asignacion_id'),
@@ -73,8 +72,8 @@ class EnviosController extends Controller
         // Retornar la respuesta en formato JSON
         return response()->json([
             'msg' => [
-                'summary' => 'Asignación creada',
-                'detail' => 'La asignación se creó correctamente',
+                'summary' => 'Envío creado',
+                'detail' => 'El envío se creó correctamente.',
             ],
             'data' => $envio
         ], 201);
@@ -101,8 +100,8 @@ class EnviosController extends Controller
 
         return response()->json([
             'msg' => [
-                'summary' => 'Actualización de la asignación',
-                'detail' => 'La asignación se actualizó correctamente',
+                'summary' => 'Envío actualizado',
+                'detail' => 'Los datos del envío se actualizaron correctamente.',
             ],
             'data' => $envio
         ]);
@@ -110,17 +109,17 @@ class EnviosController extends Controller
 
     public function destroy($id)
     {
-        // Buscar la asignación por su ID
+        // Buscar el envío por su ID
         $envio = Envios::findOrFail($id);
 
-        // Eliminar la asignación
+        // Eliminar el envío
         $envio->delete();
 
         // Retornar la respuesta en formato JSON
         return response()->json([
             'msg' => [
-                'summary' => 'Asignación eliminada',
-                'detail' => 'La asignación se eliminó correctamente',
+                'summary' => 'Envío eliminado',
+                'detail' => 'El envío se eliminó correctamente.',
             ],
             'data' => $envio
         ]);

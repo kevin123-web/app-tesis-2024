@@ -5,17 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Rol;
 
-
 class RolController extends Controller
 {
     public function index()
     {
-        $roles = Rol::get();
+        $roles = Rol::all();
         return response()->json(
             [
                 'msg' => [
-                    'summary' => 'Consulta de la asignación',
-                    'detail' => 'La asignación se consulto  correctamente',
+                    'summary' => 'Consulta de roles',
+                    'detail' => 'Los roles se consultaron correctamente.',
                 ],
                 'data' => $roles
             ]
@@ -24,12 +23,12 @@ class RolController extends Controller
 
     public function show($id)
     {
-        $roles = Rol::find($id);
-        if (!$roles) {
+        $rol = Rol::find($id);
+        if (!$rol) {
             return response()->json([
                 'msg' => [
-                    'summary' => 'Asignación no encontrada',
-                    'detail' => ' La asignación con el ID proporcionado no fue encontrado',
+                    'summary' => 'Rol no encontrado',
+                    'detail' => 'No se encontró el rol con el ID proporcionado.',
                 ],
                 'data' => null
             ], 404);
@@ -37,10 +36,10 @@ class RolController extends Controller
     
         return response()->json([
             'msg' => [
-                'summary' => 'Consulta de la asignación',
-                'detail' => 'La asignación se consulto  correctamente',
+                'summary' => 'Consulta de rol',
+                'detail' => 'El rol se consultó correctamente.',
             ],
-            'data' => $roles
+            'data' => $rol
         ]);
     }
 
@@ -48,60 +47,60 @@ class RolController extends Controller
     {
         // Validar los datos de entrada
         $request->validate([
-            'nombre' => 'required|string',
+            'nombre' => 'required|string|max:255',
         ]);
 
-        // Crear la nueva asignación
-        $roles = Rol::create([
+        // Crear el nuevo rol
+        $rol = Rol::create([
             'nombre' => $request->input('nombre'),
         ]);
 
         // Retornar la respuesta en formato JSON
         return response()->json([
             'msg' => [
-                'summary' => 'Asignación creada',
-                'detail' => 'La asignación se creó correctamente',
+                'summary' => 'Rol creado',
+                'detail' => 'El rol se creó correctamente.',
             ],
-            'data' => $roles
+            'data' => $rol
         ], 201);
     }
 
     public function update(Request $request, $id)
     {
-        $roles = Rol::findOrFail($id);
+        $rol = Rol::findOrFail($id);
 
-        // Validación para todos los campos, pero permitiendo que algunos sean opcionales
+        // Validación para los campos, permitiendo algunos opcionales
         $validatedData = $request->validate([
-            'nombre' => 'sometimes|string',
+            'nombre' => 'sometimes|string|max:255',
         ]);
 
         // Actualizar solo los campos que están presentes en la solicitud
-        $roles->update($validatedData);
+        $rol->update($validatedData);
 
         return response()->json([
             'msg' => [
-                'summary' => 'Actualización de la asignación',
-                'detail' => 'La asignación se actualizó correctamente',
+                'summary' => 'Rol actualizado',
+                'detail' => 'El rol se actualizó correctamente.',
             ],
-            'data' => $roles
+            'data' => $rol
         ]);
     }
 
     public function destroy($id)
     {
-        // Buscar la asignación por su ID
-        $roles = Rol::findOrFail($id);
+        // Buscar el rol por su ID
+        $rol = Rol::findOrFail($id);
 
-        // Eliminar la asignación
-        $roles->delete();
+        // Eliminar el rol
+        $rol->delete();
 
         // Retornar la respuesta en formato JSON
         return response()->json([
             'msg' => [
-                'summary' => 'Asignación eliminada',
-                'detail' => 'La asignación se eliminó correctamente',
+                'summary' => 'Rol eliminado',
+                'detail' => 'El rol se eliminó correctamente.',
             ],
-            'data' => $roles
+            'data' => $rol
         ]);
     }
 }

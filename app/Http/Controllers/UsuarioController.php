@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Usuario;
 
-
 class UsuarioController extends Controller
 {
     public function index()
@@ -14,8 +13,8 @@ class UsuarioController extends Controller
         return response()->json(
             [
                 'msg' => [
-                    'summary' => 'Consulta de la asignación',
-                    'detail' => 'La asignación se consulto  correctamente',
+                    'summary' => 'Consulta de usuarios',
+                    'detail' => 'Los usuarios se consultaron correctamente.',
                 ],
                 'data' => $usuarios
             ]
@@ -28,8 +27,8 @@ class UsuarioController extends Controller
         if (!$usuarios) {
             return response()->json([
                 'msg' => [
-                    'summary' => 'Asignación no encontrada',
-                    'detail' => ' La asignación con el ID proporcionado no fue encontrado',
+                    'summary' => 'Usuario no encontrado',
+                    'detail' => 'No se encontró el usuario con el ID proporcionado.',
                 ],
                 'data' => null
             ], 404);
@@ -37,8 +36,8 @@ class UsuarioController extends Controller
     
         return response()->json([
             'msg' => [
-                'summary' => 'Consulta de la asignación',
-                'detail' => 'La asignación se consulto  correctamente',
+                'summary' => 'Consulta de usuario',
+                'detail' => 'El usuario se consultó correctamente.',
             ],
             'data' => $usuarios
         ]);
@@ -53,7 +52,6 @@ class UsuarioController extends Controller
             'nombre' => 'required|string|max:50',
             'email' => 'required|email',
             'contrasena' => 'required|string',
-
         ]);
 
         // Crear la nueva asignación
@@ -63,14 +61,13 @@ class UsuarioController extends Controller
             'nombre' => $request->input('nombre'),
             'email' => $request->input('email'),
             'contrasena' => $request->input('contrasena'),
-
         ]);
 
         // Retornar la respuesta en formato JSON
         return response()->json([
             'msg' => [
-                'summary' => 'Asignación creada',
-                'detail' => 'La asignación se creó correctamente',
+                'summary' => 'Usuario creado',
+                'detail' => 'El usuario se creó correctamente.',
             ],
             'data' => $usuarios
         ], 201);
@@ -94,8 +91,8 @@ class UsuarioController extends Controller
 
         return response()->json([
             'msg' => [
-                'summary' => 'Actualización de la asignación',
-                'detail' => 'La asignación se actualizó correctamente',
+                'summary' => 'Usuario actualizado',
+                'detail' => 'El usuario se actualizó correctamente.',
             ],
             'data' => $usuarios
         ]);
@@ -112,8 +109,8 @@ class UsuarioController extends Controller
         // Retornar la respuesta en formato JSON
         return response()->json([
             'msg' => [
-                'summary' => 'Asignación eliminada',
-                'detail' => 'La asignación se eliminó correctamente',
+                'summary' => 'Usuario eliminado',
+                'detail' => 'El usuario se eliminó correctamente.',
             ],
             'data' => $usuarios
         ]);

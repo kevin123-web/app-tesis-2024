@@ -27,6 +27,7 @@ use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\usuarioRolController;
 use App\Http\Controllers\VehiculoController;
 use App\Http\Controllers\RutaController;
+use App\Http\Controllers\DirectionsController;
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -204,3 +205,14 @@ Route::post('vehiculo', [VehiculoController::class, 'store']);
 Route::put('vehiculo/{id}', [VehiculoController::class, 'update']);
 Route::delete('vehiculo/{id}', [VehiculoController::class, 'destroy']);
 
+//Directions prueba api funcional
+Route::get('/directions', [DirectionsController::class, 'show']);
+
+//Usar en el mapa
+Route::post('/directions', [DirectionsController::class, 'store']);
+
+//filtrado por cedula y nombre : persona
+Route::get('/personas/filter', [PersonaController::class, 'filter']);
+
+//filtrado por cedula y nombre : persona
+Route::get('/conductores/filter', [ConductorController::class, 'filter']);

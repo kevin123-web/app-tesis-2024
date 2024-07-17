@@ -47,12 +47,16 @@ class ubicacionOrigenController extends Controller
     {
         // Validar los datos de entrada
         $request->validate([
-            'nombre' => 'required|string',
+            'nombre' => 'sometimes|string',
+            'latitud'=> 'required|numeric|regex:/^[\d]{0,11}(\.[\d]{1,2})?$/',
+            'longitud' => 'required|numeric|regex:/^[\d]{0,11}(\.[\d]{1,2})?$/',        
         ]);
 
         // Crear la nueva asignación
         $ubicacion_origen = ubicacionOrigen::create([
             'nombre' => $request->input('nombre'),
+            'latitud'=> $request->input('latitud'),
+            'longitud' => $request->input('longitud'),
         ]);
 
         // Retornar la respuesta en formato JSON
@@ -72,6 +76,8 @@ class ubicacionOrigenController extends Controller
         // Validación para todos los campos, pero permitiendo que algunos sean opcionales
         $validatedData = $request->validate([
             'nombre' => 'sometimes|string',
+            'latitud'=> 'required|numeric|regex:/^[\d]{0,11}(\.[\d]{1,2})?$/',
+            'longitud' => 'required|numeric|regex:/^[\d]{0,11}(\.[\d]{1,2})?$/',
         ]);
 
         // Actualizar solo los campos que están presentes en la solicitud

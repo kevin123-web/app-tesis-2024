@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Mantenimiento;
 
-
 class MantenimientoController extends Controller
 {
     public function index()
@@ -14,8 +13,8 @@ class MantenimientoController extends Controller
         return response()->json(
             [
                 'msg' => [
-                    'summary' => 'Consulta de la asignación',
-                    'detail' => 'La asignación se consulto  correctamente',
+                    'summary' => 'Consulta de mantenimientos',
+                    'detail' => 'Los mantenimientos se consultaron correctamente.',
                 ],
                 'data' => $mantenimientos
             ]
@@ -24,12 +23,12 @@ class MantenimientoController extends Controller
 
     public function show($id)
     {
-        $mantenimientos = Mantenimiento::find($id);
-        if (!$mantenimientos) {
+        $mantenimiento = Mantenimiento::find($id);
+        if (!$mantenimiento) {
             return response()->json([
                 'msg' => [
-                    'summary' => 'Asignación no encontrada',
-                    'detail' => ' La asignación con el ID proporcionado no fue encontrado',
+                    'summary' => 'Mantenimiento no encontrado',
+                    'detail' => 'No se encontró un mantenimiento con el ID proporcionado.',
                 ],
                 'data' => null
             ], 404);
@@ -37,10 +36,10 @@ class MantenimientoController extends Controller
     
         return response()->json([
             'msg' => [
-                'summary' => 'Consulta de la asignación',
-                'detail' => 'La asignación se consulto  correctamente',
+                'summary' => 'Consulta de mantenimiento',
+                'detail' => 'El mantenimiento se consultó correctamente.',
             ],
-            'data' => $mantenimientos
+            'data' => $mantenimiento
         ]);
     }
 
@@ -58,8 +57,8 @@ class MantenimientoController extends Controller
             'intervalo_numero' => 'required|integer',
         ]);
 
-        // Crear la nueva asignación
-        $mantenimientos = Mantenimiento::create([
+        // Crear el nuevo mantenimiento
+        $mantenimiento = Mantenimiento::create([
             'vehiculo_id' => $request->input('vehiculo_id'),
             'mantenimiento_detalle_id' => $request->input('mantenimiento_detalle_id'),
             'maquinaria_id' => $request->input('maquinaria_id'),
@@ -73,18 +72,18 @@ class MantenimientoController extends Controller
         // Retornar la respuesta en formato JSON
         return response()->json([
             'msg' => [
-                'summary' => 'Asignación creada',
-                'detail' => 'La asignación se creó correctamente',
+                'summary' => 'Mantenimiento creado',
+                'detail' => 'El mantenimiento se creó correctamente.',
             ],
-            'data' => $mantenimientos
+            'data' => $mantenimiento
         ], 201);
     }
 
     public function update(Request $request, $id)
     {
-        $mantenimientos = Mantenimiento::findOrFail($id);
+        $mantenimiento = Mantenimiento::findOrFail($id);
 
-        // Validación para todos los campos, pero permitiendo que algunos sean opcionales
+        // Validación para todos los campos, permitiendo algunos opcionales
         $validatedData = $request->validate([
             'vehiculo_id' => 'sometimes|integer|exists:vehiculo,id',
             'mantenimiento_detalle_id' => 'sometimes|integer|exists:mantenimiento_detalle,id',
@@ -96,33 +95,33 @@ class MantenimientoController extends Controller
             'intervalo_numero' => 'sometimes|integer',
         ]);
 
-        // Actualizar solo los campos que están presentes en la solicitud
-        $mantenimientos->update($validatedData);
+        // Actualizar solo los campos presentes en la solicitud
+        $mantenimiento->update($validatedData);
 
         return response()->json([
             'msg' => [
-                'summary' => 'Actualización de la asignación',
-                'detail' => 'La asignación se actualizó correctamente',
+                'summary' => 'Mantenimiento actualizado',
+                'detail' => 'El mantenimiento se actualizó correctamente.',
             ],
-            'data' => $mantenimientos
+            'data' => $mantenimiento
         ]);
     }
 
     public function destroy($id)
     {
-        // Buscar la asignación por su ID
-        $mantenimientos = Mantenimiento::findOrFail($id);
+        // Buscar el mantenimiento por su ID
+        $mantenimiento = Mantenimiento::findOrFail($id);
 
-        // Eliminar la asignación
-        $mantenimientos->delete();
+        // Eliminar el mantenimiento
+        $mantenimiento->delete();
 
         // Retornar la respuesta en formato JSON
         return response()->json([
             'msg' => [
-                'summary' => 'Asignación eliminada',
-                'detail' => 'La asignación se eliminó correctamente',
+                'summary' => 'Mantenimiento eliminado',
+                'detail' => 'El mantenimiento se eliminó correctamente.',
             ],
-            'data' => $mantenimientos
+            'data' => $mantenimiento
         ]);
     }
 }

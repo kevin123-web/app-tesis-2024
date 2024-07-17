@@ -15,7 +15,7 @@ class ConductorFactory extends Factory
     {
         return [
 
-            'licencia_conducir'=>$this->faker->word(),
+            'licencia_conducir'=>$this->faker->word()->unique(),
             'hacer_user'=>false,
 
         ];

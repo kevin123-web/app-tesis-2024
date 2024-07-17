@@ -13,8 +13,8 @@ class EstadoController extends Controller
         return response()->json(
             [
                 'msg' => [
-                    'summary' => 'Consulta del estado',
-                    'detail' => 'El estado se consulto  correctamente',
+                    'summary' => 'Lista de estados',
+                    'detail' => 'Se consultaron los estados correctamente.',
                 ],
                 'data' => $estados
             ]
@@ -23,12 +23,12 @@ class EstadoController extends Controller
 
     public function show($id)
     {
-        $estados = Estado::find($id);
-        if (!$estados) {
+        $estado = Estado::find($id);
+        if (!$estado) {
             return response()->json([
                 'msg' => [
                     'summary' => 'Estado no encontrado',
-                    'detail' => 'El estado con el ID proporcionado no fue encontrado',
+                    'detail' => 'No se encontró un estado con el ID proporcionado.',
                 ],
                 'data' => null
             ], 404);
@@ -36,10 +36,10 @@ class EstadoController extends Controller
     
         return response()->json([
             'msg' => [
-                'summary' => 'Consulta de estado',
-                'detail' => 'El estado se consultó correctamente',
+                'summary' => 'Detalles del estado',
+                'detail' => 'Se consultaron los detalles del estado correctamente.',
             ],
-            'data' => $estados
+            'data' => $estado
         ]);
     }
 
@@ -47,7 +47,7 @@ class EstadoController extends Controller
     {
         // Validar los datos de entrada
         $request->validate([
-        'nombre' => 'required|string|max:255',
+            'nombre' => 'required|string|max:255',
         ]);
 
         // Crear el nuevo estado
@@ -59,7 +59,7 @@ class EstadoController extends Controller
         return response()->json([
             'msg' => [
                 'summary' => 'Estado creado',
-                'detail' => 'El estado se creó correctamente',
+                'detail' => 'El estado se creó correctamente.',
             ],
             'data' => $estado
         ], 201);
@@ -84,7 +84,7 @@ class EstadoController extends Controller
         return response()->json([
             'msg' => [
                 'summary' => 'Estado actualizado',
-                'detail' => 'El estado se actualizó correctamente',
+                'detail' => 'El estado se actualizó correctamente.',
             ],
             'data' => $estado
         ]);
@@ -102,7 +102,7 @@ class EstadoController extends Controller
         return response()->json([
             'msg' => [
                 'summary' => 'Estado eliminado',
-                'detail' => 'El estado se eliminó correctamente',
+                'detail' => 'El estado se eliminó correctamente.',
             ],
             'data' => $estado
         ]);

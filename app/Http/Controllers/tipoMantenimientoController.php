@@ -10,26 +10,24 @@ class tipoMantenimientoController extends Controller
 {
     public function index()
     {
-        $tipo_mantenimiento = tipoMantenimiento::get();
-        return response()->json(
-            [
-                'msg' => [
-                    'summary' => 'Consulta de la asignación',
-                    'detail' => 'La asignación se consulto  correctamente',
-                ],
-                'data' => $tipo_mantenimiento
-            ]
-        );
+        $tiposMantenimiento = tipoMantenimiento::all();
+        return response()->json([
+            'msg' => [
+                'summary' => 'Consulta de tipos de mantenimiento',
+                'detail' => 'Los tipos de mantenimiento se consultaron correctamente.',
+            ],
+            'data' => $tiposMantenimiento
+        ]);
     }
 
     public function show($id)
     {
-        $tipo_mantenimiento = tipoMantenimiento::find($id);
-        if (!$tipo_mantenimiento) {
+        $tipoMantenimiento = tipoMantenimiento::find($id);
+        if (!$tipoMantenimiento) {
             return response()->json([
                 'msg' => [
-                    'summary' => 'Asignación no encontrada',
-                    'detail' => ' La asignación con el ID proporcionado no fue encontrado',
+                    'summary' => 'Tipo de mantenimiento no encontrado',
+                    'detail' => 'No se encontró el tipo de mantenimiento con el ID proporcionado.',
                 ],
                 'data' => null
             ], 404);
@@ -37,10 +35,10 @@ class tipoMantenimientoController extends Controller
     
         return response()->json([
             'msg' => [
-                'summary' => 'Consulta de la asignación',
-                'detail' => 'La asignación se consulto  correctamente',
+                'summary' => 'Consulta de tipo de mantenimiento',
+                'detail' => 'El tipo de mantenimiento se consultó correctamente.',
             ],
-            'data' => $tipo_mantenimiento
+            'data' => $tipoMantenimiento
         ]);
     }
 
@@ -51,57 +49,57 @@ class tipoMantenimientoController extends Controller
             'nombre' => 'required|string',
         ]);
 
-        // Crear la nueva asignación
-        $tipo_mantenimiento = tipoMantenimiento::create([
+        // Crear el nuevo tipo de mantenimiento
+        $tipoMantenimiento = tipoMantenimiento::create([
             'nombre' => $request->input('nombre'),
         ]);
 
         // Retornar la respuesta en formato JSON
         return response()->json([
             'msg' => [
-                'summary' => 'Asignación creada',
-                'detail' => 'La asignación se creó correctamente',
+                'summary' => 'Tipo de mantenimiento creado',
+                'detail' => 'El tipo de mantenimiento se creó correctamente.',
             ],
-            'data' => $tipo_mantenimiento
+            'data' => $tipoMantenimiento
         ], 201);
     }
 
     public function update(Request $request, $id)
     {
-        $tipo_mantenimiento = tipoMantenimiento::findOrFail($id);
+        $tipoMantenimiento = tipoMantenimiento::findOrFail($id);
 
-        // Validación para todos los campos, pero permitiendo que algunos sean opcionales
+        // Validación para campos opcionales
         $validatedData = $request->validate([
             'nombre' => 'sometimes|string',
         ]);
 
         // Actualizar solo los campos que están presentes en la solicitud
-        $tipo_mantenimiento->update($validatedData);
+        $tipoMantenimiento->update($validatedData);
 
         return response()->json([
             'msg' => [
-                'summary' => 'Actualización de la asignación',
-                'detail' => 'La asignación se actualizó correctamente',
+                'summary' => 'Tipo de mantenimiento actualizado',
+                'detail' => 'El tipo de mantenimiento se actualizó correctamente.',
             ],
-            'data' => $tipo_mantenimiento
+            'data' => $tipoMantenimiento
         ]);
     }
 
     public function destroy($id)
     {
-        // Buscar la asignación por su ID
-        $tipo_mantenimiento = tipoMantenimiento::findOrFail($id);
+        // Buscar el tipo de mantenimiento por su ID
+        $tipoMantenimiento = tipoMantenimiento::findOrFail($id);
 
-        // Eliminar la asignación
-        $tipo_mantenimiento->delete();
+        // Eliminar el tipo de mantenimiento
+        $tipoMantenimiento->delete();
 
         // Retornar la respuesta en formato JSON
         return response()->json([
             'msg' => [
-                'summary' => 'Asignación eliminada',
-                'detail' => 'La asignación se eliminó correctamente',
+                'summary' => 'Tipo de mantenimiento eliminado',
+                'detail' => 'El tipo de mantenimiento se eliminó correctamente.',
             ],
-            'data' => $tipo_mantenimiento
+            'data' => $tipoMantenimiento
         ]);
     }
 }

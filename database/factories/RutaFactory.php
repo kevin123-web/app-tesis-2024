@@ -15,8 +15,8 @@ class RutaFactory extends Factory
     public function definition()
     {
         return [
-            'tiempo_estimado'=>Str::random(10),
-            'distancia' => $this->faker->numberBetween(0, 100), 
+            'duracion'=>$this->faker->word(),
+            'distancia' => $this->faker->word(),
 
         ];
     }

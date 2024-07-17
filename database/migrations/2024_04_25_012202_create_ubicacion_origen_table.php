@@ -18,8 +18,11 @@ class CreateUbicacionOrigenTable extends Migration
             $table->softDeletes();
             $table->timestamps(); 
 
-            $table->string('nombre',50)
+            $table->string('nombre')
             ->nullable();
+
+            $table->float('latitud'); 
+            $table->float('longitud');
         });
     }
 

@@ -10,12 +10,12 @@ class RutaController extends Controller
 {
     public function index()
     {
-        $rutas = Ruta::get();
+        $rutas = Ruta::all();
         return response()->json(
             [
                 'msg' => [
-                    'summary' => 'Consulta del estado',
-                    'detail' => 'El estado se consulto  correctamente',
+                    'summary' => 'Consulta de rutas',
+                    'detail' => 'Las rutas se consultaron correctamente.',
                 ],
                 'data' => $rutas
             ]
@@ -24,12 +24,12 @@ class RutaController extends Controller
 
     public function show($id)
     {
-        $rutas = Ruta::find($id);
-        if (!$rutas) {
+        $ruta = Ruta::find($id);
+        if (!$ruta) {
             return response()->json([
                 'msg' => [
-                    'summary' => 'Estado no encontrado',
-                    'detail' => 'El estado con el ID proporcionado no fue encontrado',
+                    'summary' => 'Ruta no encontrada',
+                    'detail' => 'No se encontró la ruta con el ID proporcionado.',
                 ],
                 'data' => null
             ], 404);
@@ -37,10 +37,10 @@ class RutaController extends Controller
     
         return response()->json([
             'msg' => [
-                'summary' => 'Consulta de estado',
-                'detail' => 'El estado se consultó correctamente',
+                'summary' => 'Consulta de ruta',
+                'detail' => 'La ruta se consultó correctamente.',
             ],
-            'data' => $rutas
+            'data' => $ruta
         ]);
     }
 
@@ -48,72 +48,69 @@ class RutaController extends Controller
     {
         // Validar los datos de entrada
         $request->validate([
-            'estado_id' => 'required|integer|exists:estado,id',
             'ubicacion_origen_id' => 'required|integer|exists:ubicacion_origen,id',
             'ubicacion_destino_id' => 'required|integer|exists:ubicacion_destino,id',
-            'tiempo_estimado' => 'required|string',
-            'distancia' => 'required|integer',
+            'duracion' => 'required|string',
+            'distancia' => 'required|string',
         ]);
 
-        // Crear la nueva asignación
-        $rutas = Ruta::create([
-            'estado_id' => $request->input('estado_id'),
+        // Crear la nueva ruta
+        $ruta = Ruta::create([
             'ubicacion_origen_id' => $request->input('ubicacion_origen_id'),
             'ubicacion_destino_id' => $request->input('ubicacion_destino_id'),
-            'tiempo_estimado' => $request->input('tiempo_estimado'),
+            'duracion' => $request->input('duracion'),
             'distancia' => $request->input('distancia'),
         ]);
 
         // Retornar la respuesta en formato JSON
         return response()->json([
             'msg' => [
-                'summary' => 'Asignación creada',
-                'detail' => 'La asignación se creó correctamente',
+                'summary' => 'Ruta creada',
+                'detail' => 'La ruta se creó correctamente.',
             ],
-            'data' => $rutas
+            'data' => $ruta
         ], 201);
     }
 
     public function update(Request $request, $id)
     {
-        $rutas = Ruta::findOrFail($id);
+        $ruta = Ruta::findOrFail($id);
 
-        // Validación para todos los campos, pero permitiendo que algunos sean opcionales
+        // Validación para los campos, permitiendo algunos opcionales
         $validatedData = $request->validate([
-            'estado_id' => 'sometimes|integer|exists:estado,id',
             'ubicacion_origen_id' => 'sometimes|integer|exists:ubicacion_origen,id',
             'ubicacion_destino_id' => 'sometimes|integer|exists:ubicacion_destino,id',
-            'tiempo_estimado' => 'sometimes|string',
-            'distancia' => 'sometimes|integer',
+            'duracion' => 'required|string',
+            'distancia' => 'required|string',
         ]);
 
         // Actualizar solo los campos que están presentes en la solicitud
-        $rutas->update($validatedData);
+        $ruta->update($validatedData);
 
         return response()->json([
             'msg' => [
-                'summary' => 'Actualización de la asignación',
-                'detail' => 'La asignación se actualizó correctamente',
+                'summary' => 'Ruta actualizada',
+                'detail' => 'La ruta se actualizó correctamente.',
             ],
-            'data' => $rutas
+            'data' => $ruta
         ]);
     }
 
     public function destroy($id)
     {
-        // Buscar la asignación por su ID
-        $rutas = Ruta::findOrFail($id);
+        // Buscar la ruta por su ID
+        $ruta = Ruta::findOrFail($id);
 
-        // Eliminar la asignación
-        $rutas->delete();
+        // Eliminar la ruta
+        $ruta->delete();
 
         // Retornar la respuesta en formato JSON
         return response()->json([
             'msg' => [
-                'summary' => 'Asignación eliminada',
-                'detail' => 'La asignación se eliminó correctamente',
+                'summary' => 'Ruta eliminada',
+                'detail' => 'La ruta se eliminó correctamente.',
             ],
-            'data' => $rutas
+            'data' => $ruta
         ]);
     }
 }

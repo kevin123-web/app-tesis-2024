@@ -10,37 +10,35 @@ class tipoVehiculoController extends Controller
 {
     public function index()
     {
-        $tipo_vehiculo = tipoVehiculo::get();
-        return response()->json(
-            [
-                'msg' => [
-                    'summary' => 'Consulta de la asignación',
-                    'detail' => 'La asignación se consulto  correctamente',
-                ],
-                'data' => $tipo_vehiculo
-            ]
-        );
+        $tiposVehiculo = tipoVehiculo::all();
+        return response()->json([
+            'msg' => [
+                'summary' => 'Consulta de tipos de vehículo',
+                'detail' => 'Los tipos de vehículo se consultaron correctamente.',
+            ],
+            'data' => $tiposVehiculo
+        ]);
     }
 
     public function show($id)
     {
-        $tipo_vehiculo = tipoVehiculo::find($id);
-        if (!$tipo_vehiculo) {
+        $tipoVehiculo = tipoVehiculo::find($id);
+        if (!$tipoVehiculo) {
             return response()->json([
                 'msg' => [
-                    'summary' => 'Asignación no encontrada',
-                    'detail' => ' La asignación con el ID proporcionado no fue encontrado',
+                    'summary' => 'Tipo de vehículo no encontrado',
+                    'detail' => 'No se encontró el tipo de vehículo con el ID proporcionado.',
                 ],
                 'data' => null
             ], 404);
         }
-    
+
         return response()->json([
             'msg' => [
-                'summary' => 'Consulta de la asignación',
-                'detail' => 'La asignación se consulto  correctamente',
+                'summary' => 'Consulta de tipo de vehículo',
+                'detail' => 'El tipo de vehículo se consultó correctamente.',
             ],
-            'data' => $tipo_vehiculo
+            'data' => $tipoVehiculo
         ]);
     }
 
@@ -51,57 +49,55 @@ class tipoVehiculoController extends Controller
             'nombre' => 'required|string',
         ]);
 
-        // Crear la nueva asignación
-        $tipo_vehiculo = tipoVehiculo::create([
+        // Crear el nuevo tipo de vehículo
+        $tipoVehiculo = tipoVehiculo::create([
             'nombre' => $request->input('nombre'),
         ]);
 
-        // Retornar la respuesta en formato JSON
         return response()->json([
             'msg' => [
-                'summary' => 'Asignación creada',
-                'detail' => 'La asignación se creó correctamente',
+                'summary' => 'Tipo de vehículo creado',
+                'detail' => 'El tipo de vehículo se creó correctamente.',
             ],
-            'data' => $tipo_vehiculo
+            'data' => $tipoVehiculo
         ], 201);
     }
 
     public function update(Request $request, $id)
     {
-        $tipo_vehiculo = tipoVehiculo::findOrFail($id);
+        $tipoVehiculo = tipoVehiculo::findOrFail($id);
 
-        // Validación para todos los campos, pero permitiendo que algunos sean opcionales
+        // Validación para campos opcionales
         $validatedData = $request->validate([
             'nombre' => 'sometimes|string',
         ]);
 
         // Actualizar solo los campos que están presentes en la solicitud
-        $tipo_vehiculo->update($validatedData);
+        $tipoVehiculo->update($validatedData);
 
         return response()->json([
             'msg' => [
-                'summary' => 'Actualización de la asignación',
-                'detail' => 'La asignación se actualizó correctamente',
+                'summary' => 'Tipo de vehículo actualizado',
+                'detail' => 'El tipo de vehículo se actualizó correctamente.',
             ],
-            'data' => $tipo_vehiculo
+            'data' => $tipoVehiculo
         ]);
     }
 
     public function destroy($id)
     {
-        // Buscar la asignación por su ID
-        $tipo_vehiculo = tipoVehiculo::findOrFail($id);
+        // Buscar el tipo de vehículo por su ID
+        $tipoVehiculo = tipoVehiculo::findOrFail($id);
 
-        // Eliminar la asignación
-        $tipo_vehiculo->delete();
+        // Eliminar el tipo de vehículo
+        $tipoVehiculo->delete();
 
-        // Retornar la respuesta en formato JSON
         return response()->json([
             'msg' => [
-                'summary' => 'Asignación eliminada',
-                'detail' => 'La asignación se eliminó correctamente',
+                'summary' => 'Tipo de vehículo eliminado',
+                'detail' => 'El tipo de vehículo se eliminó correctamente.',
             ],
-            'data' => $tipo_vehiculo
+            'data' => $tipoVehiculo
         ]);
     }
 }

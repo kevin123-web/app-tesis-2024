@@ -20,7 +20,7 @@ class PersonaFactory extends Factory
             'nombre'=>$this->faker->word(),
             'cedula'=>Str::random(10),
             'email' => $this->faker->unique()->safeEmail(),
-            'Sexo'=>$this->faker->word(),
+            'sexo'=>$this->faker->word(),
             'direccion'=>$this->faker->word(),
             'celular'=>Str::random(10),
 

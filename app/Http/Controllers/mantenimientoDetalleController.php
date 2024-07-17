@@ -5,19 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\mantenimientoDetalle;
 
-
 class mantenimientoDetalleController extends Controller
 {
     public function index()
     {
-        $mantenimiento_detalle = mantenimientoDetalle::get();
+        $mantenimiento_detalles = mantenimientoDetalle::get();
         return response()->json(
             [
                 'msg' => [
-                    'summary' => 'Consulta de la asignación',
-                    'detail' => 'La asignación se consulto  correctamente',
+                    'summary' => 'Consulta de mantenimientos detallados',
+                    'detail' => 'Los mantenimientos detallados se consultaron correctamente.',
                 ],
-                'data' => $mantenimiento_detalle
+                'data' => $mantenimiento_detalles
             ]
         );
     }
@@ -28,8 +27,8 @@ class mantenimientoDetalleController extends Controller
         if (!$mantenimiento_detalle) {
             return response()->json([
                 'msg' => [
-                    'summary' => 'Asignación no encontrada',
-                    'detail' => ' La asignación con el ID proporcionado no fue encontrado',
+                    'summary' => 'Mantenimiento detallado no encontrado',
+                    'detail' => 'No se encontró el mantenimiento detallado con el ID proporcionado.',
                 ],
                 'data' => null
             ], 404);
@@ -37,8 +36,8 @@ class mantenimientoDetalleController extends Controller
     
         return response()->json([
             'msg' => [
-                'summary' => 'Consulta de la asignación',
-                'detail' => 'La asignación se consulto  correctamente',
+                'summary' => 'Consulta de mantenimiento detallado',
+                'detail' => 'El mantenimiento detallado se consultó correctamente.',
             ],
             'data' => $mantenimiento_detalle
         ]);
@@ -52,7 +51,7 @@ class mantenimientoDetalleController extends Controller
             'observacion' => 'required|string',
         ]);
 
-        // Crear la nueva asignación
+        // Crear el nuevo mantenimiento detallado
         $mantenimiento_detalle = mantenimientoDetalle::create([
             'descripcion' => $request->input('descripcion'),
             'observacion' => $request->input('observacion'),
@@ -61,8 +60,8 @@ class mantenimientoDetalleController extends Controller
         // Retornar la respuesta en formato JSON
         return response()->json([
             'msg' => [
-                'summary' => 'Asignación creada',
-                'detail' => 'La asignación se creó correctamente',
+                'summary' => 'Mantenimiento detallado creado',
+                'detail' => 'El mantenimiento detallado se creó correctamente.',
             ],
             'data' => $mantenimiento_detalle
         ], 201);
@@ -72,7 +71,7 @@ class mantenimientoDetalleController extends Controller
     {
         $mantenimiento_detalle = mantenimientoDetalle::findOrFail($id);
 
-        // Validación para todos los campos, pero permitiendo que algunos sean opcionales
+        // Validación para todos los campos, permitiendo algunos opcionales
         $validatedData = $request->validate([
             'descripcion' => 'sometimes|string',
             'observacion' => 'sometimes|string',
@@ -83,8 +82,8 @@ class mantenimientoDetalleController extends Controller
 
         return response()->json([
             'msg' => [
-                'summary' => 'Actualización de la asignación',
-                'detail' => 'La asignación se actualizó correctamente',
+                'summary' => 'Mantenimiento detallado actualizado',
+                'detail' => 'El mantenimiento detallado se actualizó correctamente.',
             ],
             'data' => $mantenimiento_detalle
         ]);
@@ -92,17 +91,17 @@ class mantenimientoDetalleController extends Controller
 
     public function destroy($id)
     {
-        // Buscar la asignación por su ID
+        // Buscar el mantenimiento detallado por su ID
         $mantenimiento_detalle = mantenimientoDetalle::findOrFail($id);
 
-        // Eliminar la asignación
+        // Eliminar el mantenimiento detallado
         $mantenimiento_detalle->delete();
 
         // Retornar la respuesta en formato JSON
         return response()->json([
             'msg' => [
-                'summary' => 'Asignación eliminada',
-                'detail' => 'La asignación se eliminó correctamente',
+                'summary' => 'Mantenimiento detallado eliminado',
+                'detail' => 'El mantenimiento detallado se eliminó correctamente.',
             ],
             'data' => $mantenimiento_detalle
         ]);

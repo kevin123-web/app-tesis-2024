@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Conductor;
 
-
 class ConductorController extends Controller
 {
     public function index()
@@ -14,8 +13,8 @@ class ConductorController extends Controller
         return response()->json(
             [
                 'msg' => [
-                    'summary' => 'Consulta de la asignación',
-                    'detail' => 'La asignación se consulto  correctamente',
+                    'summary' => 'Lista de conductores',
+                    'detail' => 'Se obtuvo la lista de conductores correctamente.',
                 ],
                 'data' => $conductores
             ]
@@ -28,8 +27,8 @@ class ConductorController extends Controller
         if (!$conductores) {
             return response()->json([
                 'msg' => [
-                    'summary' => 'Asignación no encontrada',
-                    'detail' => ' La asignación con el ID proporcionado no fue encontrado',
+                    'summary' => 'Conductor no encontrado',
+                    'detail' => 'No se encontró un conductor con el ID proporcionado.',
                 ],
                 'data' => null
             ], 404);
@@ -37,8 +36,8 @@ class ConductorController extends Controller
     
         return response()->json([
             'msg' => [
-                'summary' => 'Consulta de la asignación',
-                'detail' => 'La asignación se consulto  correctamente',
+                'summary' => 'Detalles del conductor',
+                'detail' => 'Se consultaron los detalles del conductor correctamente.',
             ],
             'data' => $conductores
         ]);
@@ -52,7 +51,6 @@ class ConductorController extends Controller
             'persona_id' => 'required|integer|exists:persona,id',
             'licencia_conducir' => 'required|string|max:20',
             'hacer_user' => 'required|boolean',
-
         ]);
 
         // Crear la nueva asignación
@@ -66,8 +64,8 @@ class ConductorController extends Controller
         // Retornar la respuesta en formato JSON
         return response()->json([
             'msg' => [
-                'summary' => 'Asignación creada',
-                'detail' => 'La asignación se creó correctamente',
+                'summary' => 'Conductor registrado',
+                'detail' => 'El conductor se registró correctamente.',
             ],
             'data' => $conductores
         ], 201);
@@ -90,14 +88,13 @@ class ConductorController extends Controller
     
         return response()->json([
             'msg' => [
-                'summary' => 'Actualización de la asignación',
-                'detail' => 'La asignación se actualizó correctamente',
+                'summary' => 'Conductor actualizado',
+                'detail' => 'Los datos del conductor se actualizaron correctamente.',
             ],
             'data' => $conductores
         ]);
     }
     
-
     public function destroy($id)
     {
         // Buscar la asignación por su ID
@@ -109,10 +106,33 @@ class ConductorController extends Controller
         // Retornar la respuesta en formato JSON
         return response()->json([
             'msg' => [
-                'summary' => 'Asignación eliminada',
-                'detail' => 'La asignación se eliminó correctamente',
+                'summary' => 'Conductor eliminado',
+                'detail' => 'El conductor se eliminó correctamente.',
             ],
             'data' => $conductores
         ]);
+    }
+
+    public function filter(Request $request)
+    {
+        $query = Conductor::query();
+
+        // Filtrar por licencia de conducir si se proporciona
+        if ($request->has('licencia_conducir') && $request->input('licencia_conducir') != '') {
+            $query->where('licencia_conducir', 'like', '%' . $request->input('licencia_conducir') . '%');
+        }
+
+        // Obtener los resultados filtrados
+        $conductores = $query->get();
+
+        return response()->json(
+            [
+                'msg' => [
+                    'summary' => 'Consulta filtrada de conductores',
+                    'detail' => 'Los conductores se consultaron correctamente según el filtro aplicado.',
+                ],
+                'data' => $conductores
+            ]
+        );
     }
 }

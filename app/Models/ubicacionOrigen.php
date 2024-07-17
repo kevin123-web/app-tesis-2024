@@ -15,6 +15,8 @@ class ubicacionOrigen extends Model
 
     protected $fillable = [
         'nombre',
+        'latitud',
+        'longitud'
     ];
 
     public function rutas()

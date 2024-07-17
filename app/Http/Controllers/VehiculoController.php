@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Vehiculo;
 
-
 class VehiculoController extends Controller
 {
     public function index()
@@ -14,8 +13,8 @@ class VehiculoController extends Controller
         return response()->json(
             [
                 'msg' => [
-                    'summary' => 'Consulta de la asignación',
-                    'detail' => 'La asignación se consulto  correctamente',
+                    'summary' => 'Consulta de vehículos',
+                    'detail' => 'Los vehículos se consultaron correctamente.',
                 ],
                 'data' => $vehiculos
             ]
@@ -24,12 +23,12 @@ class VehiculoController extends Controller
 
     public function show($id)
     {
-        $vehiculos = Vehiculo::find($id);
-        if (!$vehiculos) {
+        $vehiculo = Vehiculo::find($id);
+        if (!$vehiculo) {
             return response()->json([
                 'msg' => [
-                    'summary' => 'Asignación no encontrada',
-                    'detail' => ' La asignación con el ID proporcionado no fue encontrado',
+                    'summary' => 'Vehículo no encontrado',
+                    'detail' => 'No se encontró el vehículo con el ID proporcionado.',
                 ],
                 'data' => null
             ], 404);
@@ -37,10 +36,10 @@ class VehiculoController extends Controller
     
         return response()->json([
             'msg' => [
-                'summary' => 'Consulta de la asignación',
-                'detail' => 'La asignación se consulto  correctamente',
+                'summary' => 'Consulta de vehículo',
+                'detail' => 'El vehículo se consultó correctamente.',
             ],
-            'data' => $vehiculos
+            'data' => $vehiculo
         ]);
     }
 
@@ -59,7 +58,7 @@ class VehiculoController extends Controller
         ]);
 
         // Crear la nueva asignación
-        $vehiculos = Vehiculo::create([
+        $vehiculo = Vehiculo::create([
             'tipo_vehiculo_id' => $request->input('tipo_vehiculo_id'),
             'estado_id' => $request->input('estado_id'),
             'placa' => $request->input('placa'),
@@ -73,16 +72,16 @@ class VehiculoController extends Controller
         // Retornar la respuesta en formato JSON
         return response()->json([
             'msg' => [
-                'summary' => 'Asignación creada',
-                'detail' => 'La asignación se creó correctamente',
+                'summary' => 'Vehículo creado',
+                'detail' => 'El vehículo se creó correctamente.',
             ],
-            'data' => $vehiculos
+            'data' => $vehiculo
         ], 201);
     }
 
     public function update(Request $request, $id)
     {
-        $vehiculos = Vehiculo::findOrFail($id);
+        $vehiculo = Vehiculo::findOrFail($id);
 
         // Validación para todos los campos, pero permitiendo que algunos sean opcionales
         $validatedData = $request->validate([
@@ -97,32 +96,32 @@ class VehiculoController extends Controller
         ]);
 
         // Actualizar solo los campos que están presentes en la solicitud
-        $vehiculos->update($validatedData);
+        $vehiculo->update($validatedData);
 
         return response()->json([
             'msg' => [
-                'summary' => 'Actualización de la asignación',
-                'detail' => 'La asignación se actualizó correctamente',
+                'summary' => 'Vehículo actualizado',
+                'detail' => 'El vehículo se actualizó correctamente.',
             ],
-            'data' => $vehiculos
+            'data' => $vehiculo
         ]);
     }
     
     public function destroy($id)
     {
         // Buscar la asignación por su ID
-        $vehiculos = Vehiculo::findOrFail($id);
+        $vehiculo = Vehiculo::findOrFail($id);
 
         // Eliminar la asignación
-        $vehiculos->delete();
+        $vehiculo->delete();
 
         // Retornar la respuesta en formato JSON
         return response()->json([
             'msg' => [
-                'summary' => 'Asignación eliminada',
-                'detail' => 'La asignación se eliminó correctamente',
+                'summary' => 'Vehículo eliminado',
+                'detail' => 'El vehículo se eliminó correctamente.',
             ],
-            'data' => $vehiculos
+            'data' => $vehiculo
         ]);
     }
 }

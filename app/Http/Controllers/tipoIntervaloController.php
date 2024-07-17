@@ -10,26 +10,24 @@ class tipoIntervaloController extends Controller
 {
     public function index()
     {
-        $tipo_intervalo = tipoIntervalo::get();
-        return response()->json(
-            [
-                'msg' => [
-                    'summary' => 'Consulta de la asignación',
-                    'detail' => 'La asignación se consulto  correctamente',
-                ],
-                'data' => $tipo_intervalo
-            ]
-        );
+        $tiposIntervalo = tipoIntervalo::all();
+        return response()->json([
+            'msg' => [
+                'summary' => 'Consulta de tipos de intervalo',
+                'detail' => 'Los tipos de intervalo se consultaron correctamente.',
+            ],
+            'data' => $tiposIntervalo
+        ]);
     }
 
     public function show($id)
     {
-        $tipo_intervalo = tipoIntervalo::find($id);
-        if (!$tipo_intervalo) {
+        $tipoIntervalo = tipoIntervalo::find($id);
+        if (!$tipoIntervalo) {
             return response()->json([
                 'msg' => [
-                    'summary' => 'Asignación no encontrada',
-                    'detail' => ' La asignación con el ID proporcionado no fue encontrado',
+                    'summary' => 'Tipo de intervalo no encontrado',
+                    'detail' => 'No se encontró el tipo de intervalo con el ID proporcionado.',
                 ],
                 'data' => null
             ], 404);
@@ -37,10 +35,10 @@ class tipoIntervaloController extends Controller
     
         return response()->json([
             'msg' => [
-                'summary' => 'Consulta de la asignación',
-                'detail' => 'La asignación se consulto  correctamente',
+                'summary' => 'Consulta de tipo de intervalo',
+                'detail' => 'El tipo de intervalo se consultó correctamente.',
             ],
-            'data' => $tipo_intervalo
+            'data' => $tipoIntervalo
         ]);
     }
 
@@ -51,57 +49,57 @@ class tipoIntervaloController extends Controller
             'nombre' => 'required|string',
         ]);
 
-        // Crear la nueva asignación
-        $tipo_intervalo = tipoIntervalo::create([
+        // Crear el nuevo tipo de intervalo
+        $tipoIntervalo = tipoIntervalo::create([
             'nombre' => $request->input('nombre'),
         ]);
 
         // Retornar la respuesta en formato JSON
         return response()->json([
             'msg' => [
-                'summary' => 'Asignación creada',
-                'detail' => 'La asignación se creó correctamente',
+                'summary' => 'Tipo de intervalo creado',
+                'detail' => 'El tipo de intervalo se creó correctamente.',
             ],
-            'data' => $tipo_intervalo
+            'data' => $tipoIntervalo
         ], 201);
     }
 
     public function update(Request $request, $id)
     {
-        $tipo_intervalo = tipoIntervalo::findOrFail($id);
+        $tipoIntervalo = tipoIntervalo::findOrFail($id);
 
-        // Validación para todos los campos, pero permitiendo que algunos sean opcionales
+        // Validación para campos opcionales
         $validatedData = $request->validate([
             'nombre' => 'sometimes|string',
         ]);
 
         // Actualizar solo los campos que están presentes en la solicitud
-        $tipo_intervalo->update($validatedData);
+        $tipoIntervalo->update($validatedData);
 
         return response()->json([
             'msg' => [
-                'summary' => 'Actualización de la asignación',
-                'detail' => 'La asignación se actualizó correctamente',
+                'summary' => 'Tipo de intervalo actualizado',
+                'detail' => 'El tipo de intervalo se actualizó correctamente.',
             ],
-            'data' => $tipo_intervalo
+            'data' => $tipoIntervalo
         ]);
     }
 
     public function destroy($id)
     {
-        // Buscar la asignación por su ID
-        $tipo_intervalo = tipoIntervalo::findOrFail($id);
+        // Buscar el tipo de intervalo por su ID
+        $tipoIntervalo = tipoIntervalo::findOrFail($id);
 
-        // Eliminar la asignación
-        $tipo_intervalo->delete();
+        // Eliminar el tipo de intervalo
+        $tipoIntervalo->delete();
 
         // Retornar la respuesta en formato JSON
         return response()->json([
             'msg' => [
-                'summary' => 'Asignación eliminada',
-                'detail' => 'La asignación se eliminó correctamente',
+                'summary' => 'Tipo de intervalo eliminado',
+                'detail' => 'El tipo de intervalo se eliminó correctamente.',
             ],
-            'data' => $tipo_intervalo
+            'data' => $tipoIntervalo
         ]);
     }
 }

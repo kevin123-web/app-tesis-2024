@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Maquinaria;
 
-
 class MaquinariaController extends Controller
 {
     public function index()
@@ -14,8 +13,8 @@ class MaquinariaController extends Controller
         return response()->json(
             [
                 'msg' => [
-                    'summary' => 'Consulta de la asignación',
-                    'detail' => 'La asignación se consulto  correctamente',
+                    'summary' => 'Consulta de maquinarias',
+                    'detail' => 'Las maquinarias se consultaron correctamente.',
                 ],
                 'data' => $maquinarias
             ]
@@ -24,12 +23,12 @@ class MaquinariaController extends Controller
 
     public function show($id)
     {
-        $maquinarias = Maquinaria::find($id);
-        if (!$maquinarias) {
+        $maquinaria = Maquinaria::find($id);
+        if (!$maquinaria) {
             return response()->json([
                 'msg' => [
-                    'summary' => 'Asignación no encontrada',
-                    'detail' => ' La asignación con el ID proporcionado no fue encontrado',
+                    'summary' => 'Maquinaria no encontrada',
+                    'detail' => 'No se encontró la maquinaria con el ID proporcionado.',
                 ],
                 'data' => null
             ], 404);
@@ -37,10 +36,10 @@ class MaquinariaController extends Controller
     
         return response()->json([
             'msg' => [
-                'summary' => 'Consulta de la asignación',
-                'detail' => 'La asignación se consulto  correctamente',
+                'summary' => 'Consulta de maquinaria',
+                'detail' => 'La maquinaria se consultó correctamente.',
             ],
-            'data' => $maquinarias
+            'data' => $maquinaria
         ]);
     }
 
@@ -48,60 +47,60 @@ class MaquinariaController extends Controller
     {
         // Validar los datos de entrada
         $request->validate([
-            'nombre' => 'required|string',
+            'nombre' => 'required|string|max:255',
         ]);
 
-        // Crear la nueva asignación
-        $maquinarias = Maquinaria::create([
+        // Crear la nueva maquinaria
+        $maquinaria = Maquinaria::create([
             'nombre' => $request->input('nombre'),
         ]);
 
         // Retornar la respuesta en formato JSON
         return response()->json([
             'msg' => [
-                'summary' => 'Asignación creada',
-                'detail' => 'La asignación se creó correctamente',
+                'summary' => 'Maquinaria creada',
+                'detail' => 'La maquinaria se creó correctamente.',
             ],
-            'data' => $maquinarias
+            'data' => $maquinaria
         ], 201);
     }
 
     public function update(Request $request, $id)
     {
-        $maquinarias = Maquinaria::findOrFail($id);
+        $maquinaria = Maquinaria::findOrFail($id);
 
-        // Validación para todos los campos, pero permitiendo que algunos sean opcionales
+        // Validación para todos los campos, permitiendo algunos opcionales
         $validatedData = $request->validate([
-            'nombre' => 'sometimes|string',
+            'nombre' => 'sometimes|string|max:255',
         ]);
 
         // Actualizar solo los campos que están presentes en la solicitud
-        $maquinarias->update($validatedData);
+        $maquinaria->update($validatedData);
 
         return response()->json([
             'msg' => [
-                'summary' => 'Actualización de la asignación',
-                'detail' => 'La asignación se actualizó correctamente',
+                'summary' => 'Maquinaria actualizada',
+                'detail' => 'La maquinaria se actualizó correctamente.',
             ],
-            'data' => $maquinarias
+            'data' => $maquinaria
         ]);
     }
 
     public function destroy($id)
     {
-        // Buscar la asignación por su ID
-        $maquinarias = Maquinaria::findOrFail($id);
+        // Buscar la maquinaria por su ID
+        $maquinaria = Maquinaria::findOrFail($id);
 
-        // Eliminar la asignación
-        $maquinarias->delete();
+        // Eliminar la maquinaria
+        $maquinaria->delete();
 
         // Retornar la respuesta en formato JSON
         return response()->json([
             'msg' => [
-                'summary' => 'Asignación eliminada',
-                'detail' => 'La asignación se eliminó correctamente',
+                'summary' => 'Maquinaria eliminada',
+                'detail' => 'La maquinaria se eliminó correctamente.',
             ],
-            'data' => $maquinarias
+            'data' => $maquinaria
         ]);
     }
 }

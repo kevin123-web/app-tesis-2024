@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\usuarioRol;
 
-
 class usuarioRolController extends Controller
 {
     public function index()
@@ -14,8 +13,8 @@ class usuarioRolController extends Controller
         return response()->json(
             [
                 'msg' => [
-                    'summary' => 'Consulta de la asignación',
-                    'detail' => 'La asignación se consulto  correctamente',
+                    'summary' => 'Consulta de roles de usuario',
+                    'detail' => 'Los roles de usuario se consultaron correctamente.',
                 ],
                 'data' => $usuario_rol
             ]
@@ -28,8 +27,8 @@ class usuarioRolController extends Controller
         if (!$usuario_rol) {
             return response()->json([
                 'msg' => [
-                    'summary' => 'Asignación no encontrada',
-                    'detail' => ' La asignación con el ID proporcionado no fue encontrado',
+                    'summary' => 'Rol de usuario no encontrado',
+                    'detail' => 'No se encontró la asignación con el ID proporcionado.',
                 ],
                 'data' => null
             ], 404);
@@ -37,8 +36,8 @@ class usuarioRolController extends Controller
     
         return response()->json([
             'msg' => [
-                'summary' => 'Consulta de la asignación',
-                'detail' => 'La asignación se consulto  correctamente',
+                'summary' => 'Consulta de rol de usuario',
+                'detail' => 'La asignación se consultó correctamente.',
             ],
             'data' => $usuario_rol
         ]);
@@ -50,21 +49,19 @@ class usuarioRolController extends Controller
         $request->validate([
             'rol_id' => 'required|integer|exists:rol,id',
             'usuario_id' => 'required|integer|exists:usuario,id',
-
         ]);
 
         // Crear la nueva asignación
         $usuario_rol = usuarioRol::create([
             'rol_id' => $request->input('rol_id'),
             'usuario_id' => $request->input('usuario_id'),
-
         ]);
 
         // Retornar la respuesta en formato JSON
         return response()->json([
             'msg' => [
-                'summary' => 'Asignación creada',
-                'detail' => 'La asignación se creó correctamente',
+                'summary' => 'Rol de usuario creado',
+                'detail' => 'La asignación se creó correctamente.',
             ],
             'data' => $usuario_rol
         ], 201);
@@ -85,8 +82,8 @@ class usuarioRolController extends Controller
 
         return response()->json([
             'msg' => [
-                'summary' => 'Actualización de la asignación',
-                'detail' => 'La asignación se actualizó correctamente',
+                'summary' => 'Rol de usuario actualizado',
+                'detail' => 'La asignación se actualizó correctamente.',
             ],
             'data' => $usuario_rol
         ]);
@@ -103,8 +100,8 @@ class usuarioRolController extends Controller
         // Retornar la respuesta en formato JSON
         return response()->json([
             'msg' => [
-                'summary' => 'Asignación eliminada',
-                'detail' => 'La asignación se eliminó correctamente',
+                'summary' => 'Rol de usuario eliminado',
+                'detail' => 'La asignación se eliminó correctamente.',
             ],
             'data' => $usuario_rol
         ]);
