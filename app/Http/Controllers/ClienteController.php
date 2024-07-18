@@ -10,7 +10,7 @@ class ClienteController extends Controller
 {
     public function index()
     {
-        $clientes = Cliente::get();
+        $clientes = Cliente::with(['persona'])->get();
         return response()->json(
             [
                 'msg' => [

@@ -7,18 +7,31 @@ use App\Models\Conductor;
 
 class ConductorController extends Controller
 {
+    // public function index()
+    // {
+    //     $conductores = Conductor::get();
+    //     return response()->json(
+    //         [
+    //             'msg' => [
+    //                 'summary' => 'Lista de conductores',
+    //                 'detail' => 'Se obtuvo la lista de conductores correctamente.',
+    //             ],
+    //             'data' => $conductores
+    //         ]
+    //     );
+    // }
+
     public function index()
     {
-        $conductores = Conductor::get();
-        return response()->json(
-            [
-                'msg' => [
-                    'summary' => 'Lista de conductores',
-                    'detail' => 'Se obtuvo la lista de conductores correctamente.',
-                ],
-                'data' => $conductores
-            ]
-        );
+        $conductores = Conductor::with(['estado', 'persona'])->get();
+
+        return response()->json([
+            'msg' => [
+                'summary' => 'Lista de conductores',
+                'detail' => 'Se obtuvo la lista de conductores correctamente.',
+            ],
+            'data' => $conductores
+        ]);
     }
 
     public function show($id)

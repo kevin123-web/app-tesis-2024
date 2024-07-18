@@ -9,7 +9,14 @@ class EnviosController extends Controller
 {
     public function index()
     {
-        $envio = Envios::get();
+        $envio = Envios::with([
+            'cliente.persona', 
+            'asignacion' => function($query) {
+                $query->with(['ruta','ConductorVehiculo']);
+            },
+            'servicio', 
+            'estado'
+            ])->get();
         return response()->json(
             [
                 'msg' => [
