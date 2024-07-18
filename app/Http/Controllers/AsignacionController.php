@@ -10,7 +10,7 @@ class AsignacionController extends Controller
 {
     public function index()
     {
-        $asignaciones = Asignacion::get();
+        $asignaciones = Asignacion::with(['conductorVehiculo'])->get();
         return response()->json(
             [
                 'msg' => [
