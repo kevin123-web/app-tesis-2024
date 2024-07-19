@@ -49,7 +49,7 @@ class PersonaController extends Controller{
         $request->validate([
             'tipo_identificacion_id' => 'required|integer|exists:tipo_identificacion,id',
             'nombre' => 'required|string|max:255',
-            'cedula' => 'required|string|max:10',
+            'cedula' => 'required|string|max:13',
             'email' => 'required|email',
             'sexo' => 'required|string',
             'direccion' => 'required|string',
