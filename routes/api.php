@@ -216,3 +216,9 @@ Route::get('/personas/filter', [PersonaController::class, 'filter']);
 
 //filtrado por cedula y nombre : persona
 Route::get('/conductores/filter', [ConductorController::class, 'filter']);
+
+//filtrado por persona_id: cliente
+Route::get('/clientes/filter', [ClienteController::class, 'filter']);
+
+//filtrado por persona_id: cliente
+Route::get('/vehiculos/filter', [VehiculoController::class, 'filter']);
