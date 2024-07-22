@@ -136,6 +136,11 @@ class PersonaController extends Controller{
         $query->where('nombre', 'like', '%' . $request->input('nombre') . '%');
     }
 
+    // Filtrar por email si se proporciona
+    if ($request->has('email') && $request->input('email') != '') {
+        $query->where('email', 'like', '%' . $request->input('email') . '%');
+    }
+
     // Obtener los resultados filtrados
     $personas = $query->get();
 

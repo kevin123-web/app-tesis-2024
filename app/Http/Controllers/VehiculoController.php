@@ -124,4 +124,26 @@ class VehiculoController extends Controller
             'data' => $vehiculo
         ]);
     }
+
+
+    public function filter(Request $request)
+    {
+        $query = Vehiculo::query();
+        
+        // Filtrar por placa si se proporciona (comparación exacta)
+        if ($request->has('placa') && $request->input('placa') != '') {
+            $query->where('placa', '=', $request->input('placa'));
+        }
+        
+        // Obtener los resultados filtrados
+        $vehiculos = $query->get();
+        
+        return response()->json([
+            'msg' => [
+                'summary' => 'Consulta filtrada de vehiculos',
+                'detail' => 'Los vehiculos se consultaron correctamente según el filtro aplicado.',
+            ],
+            'data' => $vehiculos
+        ]);
+    }
 }

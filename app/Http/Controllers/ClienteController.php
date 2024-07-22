@@ -110,4 +110,26 @@ class ClienteController extends Controller
             'data' => $clientes
         ]);
     }
+
+
+    public function filter(Request $request)
+    {
+        $query = Cliente::query();
+        
+        // Filtrar por id_persona si se proporciona (comparación exacta)
+        if ($request->has('persona_id') && $request->input('persona_id') != '') {
+            $query->where('persona_id', '=', $request->input('persona_id'));
+        }
+        
+        // Obtener los resultados filtrados
+        $clientes = $query->get();
+        
+        return response()->json([
+            'msg' => [
+                'summary' => 'Consulta filtrada de clientes',
+                'detail' => 'Los clientes se consultaron correctamente según el filtro aplicado.',
+            ],
+            'data' => $clientes
+        ]);
+    }
 }
