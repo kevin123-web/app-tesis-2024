@@ -27,6 +27,7 @@ use App\Models\Factura;
 use App\Models\Servicio;
 use App\Models\mantenimientoDetalle;
 use App\Models\usuarioRol;
+use App\Models\Notificaciones;
 use Faker\Factory as Faker; 
 
 
@@ -49,6 +50,7 @@ class DatabaseSeeder extends Seeder
         tipoMantenimiento::factory()->count(3)->create();
         Rol::factory()->count(3)->create();
         tipoPago::factory()->count(3)->create();
+        Notificaciones::factory()->count(3)->create();
 
         $faker = Faker::create(); 
 
@@ -78,7 +80,8 @@ class DatabaseSeeder extends Seeder
                 'modelo' => $faker->word, 
                 'anio' => $faker->numberBetween(2000, 2022), 
                 'tipo_contrato' => $faker->randomElement(['leasing', 'compra']), 
-                'capacidad' => $faker->numberBetween(1, 5), 
+                'capacidad' => $faker->numberBetween(1, 5),
+                'disponible' => true 
             ]);
         }
 
@@ -132,7 +135,8 @@ class DatabaseSeeder extends Seeder
                 'descripcion' => $faker->sentence(), 
                 'peso_mercancia' => $faker->randomFloat(2, 0, 800), 
                 'fecha_recogida' => $faker->date(), 
-                'fecha_entrega' => $faker->date(), 
+                'fecha_entrega' => $faker->date(),
+                'prioridad' => $faker->sentence()
             ]);
         }
 

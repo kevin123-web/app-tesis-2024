@@ -28,6 +28,9 @@ use App\Http\Controllers\usuarioRolController;
 use App\Http\Controllers\VehiculoController;
 use App\Http\Controllers\RutaController;
 use App\Http\Controllers\DirectionsController;
+use App\Http\Controllers\MessageController;
+use App\Http\Controllers\NotificacionesController;
+
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -222,3 +225,16 @@ Route::get('/clientes/filter', [ClienteController::class, 'filter']);
 
 //filtrado por persona_id: cliente
 Route::get('/vehiculos/filter', [VehiculoController::class, 'filter']);
+
+//notificacion
+Route::post('/send-message', [MessageController::class, 'sendMessage']);
+
+//filtro por fechas
+Route::get('/envios/filter', [EnviosController::class, 'filterByCreationDate']);
+
+//notificaciones
+Route::get('notificaciones', [NotificacionesController::class, 'index']);
+Route::get('notificaciones/{id}', [NotificacionesController::class, 'show']);
+Route::post('notificaciones', [NotificacionesController::class, 'store']);
+Route::put('notificaciones/{id}', [NotificacionesController::class, 'update']);
+Route::delete('notificaciones/{id}', [NotificacionesController::class, 'destroy']);

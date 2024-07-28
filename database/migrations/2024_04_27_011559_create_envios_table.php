@@ -31,6 +31,7 @@ class CreateEnviosTable extends Migration
             $table->date('fecha_recogida');
             $table->date('fecha_entrega');
 
+            $table->string('prioridad');
 
         });
     }

@@ -62,6 +62,7 @@ class EnviosController extends Controller
             'peso_mercancia' => 'required|numeric|regex:/^[\d]{0,11}(\.[\d]{1,2})?$/',
             'fecha_recogida' => 'required|date',
             'fecha_entrega' => 'required|date',
+            'prioridad' => 'required|string',
         ]);
 
         // Crear el nuevo envío
@@ -74,6 +75,7 @@ class EnviosController extends Controller
             'peso_mercancia' => $request->input('peso_mercancia'),
             'fecha_recogida' => $request->input('fecha_recogida'),
             'fecha_entrega' => $request->input('fecha_entrega'),
+            'prioridad' => $request->input('prioridad'),
         ]);
 
         // Retornar la respuesta en formato JSON
@@ -100,6 +102,7 @@ class EnviosController extends Controller
             'peso_mercancia' => 'sometimes|numeric|regex:/^[\d]{0,11}(\.[\d]{1,2})?$/',
             'fecha_recogida' => 'sometimes|date',
             'fecha_entrega' => 'sometimes|date',
+            'prioridad' => 'required|string',
         ]);
 
         // Actualizar solo los campos que están presentes en la solicitud
@@ -131,4 +134,68 @@ class EnviosController extends Controller
             'data' => $envio
         ]);
     }
+
+    public function filterByCreationDate(Request $request)
+    {
+        // Validar start_date y end_date, ambos son opcionales
+        $request->validate([
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date|after_or_equal:start_date',
+        ]);
+    
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+    
+        // Construir la consulta
+        $query = Envios::with([
+            'cliente.persona',
+            'asignacion' => function($query) {
+                $query->with(['ruta', 'ConductorVehiculo']);
+            },
+            'servicio',
+            'estado'
+        ]);
+    
+        // Aplicar filtros según los parámetros proporcionados
+        if ($startDate && $endDate) {
+            // Ambos start_date y end_date proporcionados
+            if ($startDate > $endDate) {
+                // start_date es posterior a end_date, no hay resultados posibles
+                $query->whereRaw('1 = 0'); // Esta condición nunca será verdadera
+            } else {
+                // Filtrar por registros creados entre start_date y end_date
+                $query->whereBetween('created_at', [$startDate . ' 00:00:00', $endDate . ' 23:59:59']);
+            }
+        } elseif ($startDate) {
+            // Solo start_date proporcionado, filtrar por registros creados desde start_date
+            $query->whereDate('created_at', '>=', $startDate);
+        } elseif ($endDate) {
+            // Solo end_date proporcionado, filtrar por registros creados hasta end_date
+            $query->whereDate('created_at', '<=', $endDate);
+        }
+    
+        // Obtener los resultados
+        $envios = $query->get();
+    
+        // Verificar si hay resultados
+        if ($envios->isEmpty()) {
+            return response()->json([
+                'msg' => [
+                    'summary' => 'No hay registros',
+                    'detail' => 'No se encontraron envíos para el rango de fechas especificado.',
+                ],
+                'data' => []
+            ]);
+        }
+    
+        return response()->json([
+            'msg' => [
+                'summary' => 'Lista de envíos filtrados',
+                'detail' => 'Se consultaron los envíos correctamente según el rango de fechas de creación.',
+            ],
+            'data' => $envios
+        ]);
+    }
+    
+    
 }

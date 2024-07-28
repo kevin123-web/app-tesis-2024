@@ -21,7 +21,8 @@ class Vehiculo extends Model
         'modelo', 
         'anio', 
         'tipo_contrato', 
-        'capacidad'
+        'capacidad',
+        'disponible',
     ];
 
     public function TipoVehiculo()

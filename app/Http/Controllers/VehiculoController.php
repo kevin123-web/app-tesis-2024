@@ -9,7 +9,7 @@ class VehiculoController extends Controller
 {
     public function index()
     {
-        $vehiculos = Vehiculo::get();
+        $vehiculos = Vehiculo::with(['estado'])->get();
         return response()->json(
             [
                 'msg' => [
@@ -23,7 +23,7 @@ class VehiculoController extends Controller
 
     public function show($id)
     {
-        $vehiculo = Vehiculo::find($id);
+        $vehiculo = Vehiculo::with(['estado'])->find($id);
         if (!$vehiculo) {
             return response()->json([
                 'msg' => [
@@ -55,6 +55,7 @@ class VehiculoController extends Controller
             'anio' => 'sometimes|integer',
             'tipo_contrato' => 'sometimes|string',
             'capacidad' => 'sometimes|integer',
+            'disponible' => 'required|boolean',
         ]);
 
         // Crear la nueva asignación
@@ -67,6 +68,7 @@ class VehiculoController extends Controller
             'anio' => $request->input('anio'),
             'tipo_contrato' => $request->input('tipo_contrato'),
             'capacidad' => $request->input('capacidad'),
+            'disponible' => $request->input('disponible'),
         ]);
 
         // Retornar la respuesta en formato JSON
@@ -93,6 +95,7 @@ class VehiculoController extends Controller
             'anio' => 'sometimes|integer',
             'tipo_contrato' => 'sometimes|string',
             'capacidad' => 'sometimes|integer',
+            'disponible' => 'required|boolean',
         ]);
 
         // Actualizar solo los campos que están presentes en la solicitud
@@ -129,21 +132,30 @@ class VehiculoController extends Controller
     public function filter(Request $request)
     {
         $query = Vehiculo::query();
-        
+    
         // Filtrar por placa si se proporciona (comparación exacta)
         if ($request->has('placa') && $request->input('placa') != '') {
             $query->where('placa', '=', $request->input('placa'));
         }
-        
+    
+        // Filtrar por disponibilidad si se proporciona
+        if ($request->has('disponible')) {
+            $disponible = filter_var($request->input('disponible'), FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+            if ($disponible !== null) {
+                $query->where('disponible', $disponible);
+            }
+        }
+    
         // Obtener los resultados filtrados
         $vehiculos = $query->get();
         
         return response()->json([
             'msg' => [
-                'summary' => 'Consulta filtrada de vehiculos',
-                'detail' => 'Los vehiculos se consultaron correctamente según el filtro aplicado.',
+                'summary' => 'Consulta filtrada de vehículos',
+                'detail' => 'Los vehículos se consultaron correctamente según el filtro aplicado.',
             ],
             'data' => $vehiculos
         ]);
     }
+    
 }

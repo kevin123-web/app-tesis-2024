@@ -41,6 +41,8 @@ class CreateVehiculoTable extends Migration
             $table->integer('capacidad')
             ->default(0);
 
+            $table->boolean('disponible');
+            
         });
     }
 

@@ -21,7 +21,8 @@ class Envios extends Model
         'descripcion', 
         'peso_mercancia', 
         'fecha_recogida', 
-        'fecha_entrega'
+        'fecha_entrega',
+        'prioridad',
     ];
 
     public function cliente()
