@@ -24,7 +24,7 @@ class ClienteController extends Controller
 
     public function show($id)
     {
-        $clientes = Cliente::find($id);
+        $clientes = Cliente::with(['persona'])->find($id);
         if (!$clientes) {
             return response()->json([
                 'msg' => [

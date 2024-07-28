@@ -9,7 +9,7 @@ class MantenimientoController extends Controller
 {
     public function index()
     {
-        $mantenimientos = Mantenimiento::get();
+        $mantenimientos = Mantenimiento::with(['vehiculo', 'mantenimientoDetalle', 'tipoMantenimiento', 'tipoIntervalo'])->get();
         return response()->json(
             [
                 'msg' => [
@@ -23,7 +23,7 @@ class MantenimientoController extends Controller
 
     public function show($id)
     {
-        $mantenimiento = Mantenimiento::find($id);
+        $mantenimiento = Mantenimiento::with(['vehiculo', 'mantenimientoDetalle', 'tipoMantenimiento', 'tipoIntervalo'])->find($id);
         if (!$mantenimiento) {
             return response()->json([
                 'msg' => [
@@ -49,7 +49,7 @@ class MantenimientoController extends Controller
         $request->validate([
             'vehiculo_id' => 'required|integer|exists:vehiculo,id',
             'mantenimiento_detalle_id' => 'required|integer|exists:mantenimiento_detalle,id',
-            'maquinaria_id' => 'required|integer|exists:maquinaria,id',
+            'maquinaria_id' => 'integer|exists:maquinaria,id',
             'tipo_mantenimiento_id' => 'required|integer|exists:tipo_mantenimiento,id',
             'tipo_intervalo_id' => 'required|integer|exists:tipo_intervalo,id',
             'fecha_mantenimiento' => 'required|date',

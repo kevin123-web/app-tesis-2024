@@ -36,7 +36,7 @@ class ConductorController extends Controller
 
     public function show($id)
     {
-        $conductores = Conductor::find($id);
+        $conductores = Conductor::with(['estado', 'persona'])->find($id);
         if (!$conductores) {
             return response()->json([
                 'msg' => [
