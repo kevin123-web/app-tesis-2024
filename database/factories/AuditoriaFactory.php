@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class ConductorFactory extends Factory
+class AuditoriaFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -14,12 +14,8 @@ class ConductorFactory extends Factory
     public function definition()
     {
         return [
-
-            'licencia_conducir'=>$this->faker->word()->unique(),
-            'hacer_user'=>false,
-            'disponible'=>true,
-
-
+            
+            'descripcion'=>$this->faker->sentence(),
         ];
     }
 }

@@ -28,6 +28,9 @@ class CreateConductorTable extends Migration
             $table->boolean('hacer_user')
             ->default("FALSE");
 
+            $table->boolean('disponible')
+            ->default("TRUE");
+
 
         });
     }

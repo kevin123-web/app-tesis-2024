@@ -48,6 +48,7 @@ class UsuarioController extends Controller
         // Validar los datos de entrada
         $request->validate([
             'rol_id' => 'required|integer|exists:rol,id',
+            'departamento_id' => 'required|integer|exists:departamento,id',
             'nombre_usuario' => 'required|string',
             'nombre' => 'required|string|max:50',
             'email' => 'required|email',
@@ -57,6 +58,7 @@ class UsuarioController extends Controller
         // Crear la nueva asignación
         $usuarios = Usuario::create([
             'rol_id' => $request->input('rol_id'),
+            'departamento_id' => $request->input('departamento_id'),
             'nombre_usuario' => $request->input('nombre_usuario'),
             'nombre' => $request->input('nombre'),
             'email' => $request->input('email'),
@@ -80,6 +82,7 @@ class UsuarioController extends Controller
         // Validación para todos los campos, pero permitiendo que algunos sean opcionales
         $validatedData = $request->validate([
             'rol_id' => 'sometimes|integer|exists:rol,id',
+            'departamento_id' => 'required|integer|exists:departamento,id',
             'nombre_usuario' => 'sometimes|string',
             'nombre' => 'sometimes|string|max:50',
             'email' => 'sometimes|email',

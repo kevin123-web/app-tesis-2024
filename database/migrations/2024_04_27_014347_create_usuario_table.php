@@ -19,6 +19,8 @@ class CreateUsuarioTable extends Migration
             $table->timestamps();
 
             $table->foreignId('rol_id')->constrained('rol');
+            $table->foreignId('departamento_id')->constrained('departamento');
+
 
             $table->string('nombre_usuario', 50)
             ->unique();

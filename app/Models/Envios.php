@@ -49,4 +49,9 @@ class Envios extends Model
     {
         return $this->hasMany(Factura::class);
     }
+
+    public function auditoria()
+    {
+        return $this->hasMany(Auditoria::class);
+    }
 }

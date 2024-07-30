@@ -30,6 +30,9 @@ use App\Http\Controllers\RutaController;
 use App\Http\Controllers\DirectionsController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\NotificacionesController;
+use App\Http\Controllers\DepartamentoController;
+use App\Http\Controllers\AuditoriaController;
+
 
 
 
@@ -223,7 +226,7 @@ Route::get('/conductores/filter', [ConductorController::class, 'filter']);
 //filtrado por persona_id: cliente
 Route::get('/clientes/filter', [ClienteController::class, 'filter']);
 
-//filtrado por persona_id: cliente
+//filtrado por disponibilidad de vehiculo
 Route::get('/vehiculos/filter', [VehiculoController::class, 'filter']);
 
 //notificacion
@@ -238,3 +241,20 @@ Route::get('notificaciones/{id}', [NotificacionesController::class, 'show']);
 Route::post('notificaciones', [NotificacionesController::class, 'store']);
 Route::put('notificaciones/{id}', [NotificacionesController::class, 'update']);
 Route::delete('notificaciones/{id}', [NotificacionesController::class, 'destroy']);
+
+//Departamento
+Route::get('departamento', [DepartamentoController::class, 'index']); 
+Route::get('departamento/{id}', [DepartamentoController::class, 'show']);
+Route::post('departamento', [DepartamentoController::class, 'store']);
+Route::put('departamento/{id}', [DepartamentoController::class, 'update']);
+Route::delete('departamento/{id}', [DepartamentoController::class, 'destroy']);
+
+//Auditoria
+Route::get('auditoria', [AuditoriaController::class, 'index']); 
+Route::get('auditoria/{id}', [AuditoriaController::class, 'show']);
+Route::post('auditoria', [AuditoriaController::class, 'store']);
+Route::put('auditoria/{id}', [AuditoriaController::class, 'update']);
+Route::delete('auditoria/{id}', [AuditoriaController::class, 'destroy']);
+
+//flitro de envios por estado y cliente
+Route::get('/envios/filters', [EnviosController::class, 'filter']);

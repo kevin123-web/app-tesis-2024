@@ -28,6 +28,9 @@ use App\Models\Servicio;
 use App\Models\mantenimientoDetalle;
 use App\Models\usuarioRol;
 use App\Models\Notificaciones;
+use App\Models\Departamento;
+use App\Models\Auditoria;
+
 use Faker\Factory as Faker; 
 
 
@@ -51,6 +54,8 @@ class DatabaseSeeder extends Seeder
         Rol::factory()->count(3)->create();
         tipoPago::factory()->count(3)->create();
         Notificaciones::factory()->count(3)->create();
+        Departamento::factory()->count(3)->create();
+
 
         $faker = Faker::create(); 
 
@@ -90,7 +95,8 @@ class DatabaseSeeder extends Seeder
                 'persona_id' => random_int(1, 3), 
                 'estado_id' => random_int(1, 3), 
                 'licencia_conducir' => $faker->lexify('???###'), 
-                'hacer_user' => false, 
+                'hacer_user' => false,
+                'disponible' => true 
             ]);
         }
 
@@ -155,7 +161,8 @@ class DatabaseSeeder extends Seeder
 
         for ($i = 0; $i < 3; $i++) {
             Usuario::create([
-                'rol_id' => random_int(1, 3), 
+                'rol_id' => random_int(1, 3),
+                'departamento_id' => random_int(1, 3),
                 'nombre_usuario' => $faker->userName(), 
                 'nombre' => $faker->name(), 
                 'email' => $faker->email(), 
@@ -181,6 +188,14 @@ class DatabaseSeeder extends Seeder
                 'total' => $faker->randomFloat(2, 0, 800), 
                 'con_iva' => false, 
                 'servicio' => false, 
+            ]);
+        }
+
+        for ($i = 0; $i < 3; $i++) {
+            Auditoria::create([
+                'usuario_id' => random_int(1, 3), 
+                'envio_id' => random_int(1, 3),
+                'descripcion' => $faker->sentence(), 
             ]);
         }
 

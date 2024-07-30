@@ -64,6 +64,8 @@ class ConductorController extends Controller
             'persona_id' => 'required|integer|exists:persona,id',
             'licencia_conducir' => 'required|string|max:20',
             'hacer_user' => 'required|boolean',
+            'disponible' => 'required|boolean',
+
         ]);
 
         // Crear la nueva asignación
@@ -72,6 +74,8 @@ class ConductorController extends Controller
             'persona_id' => $request->input('persona_id'),
             'licencia_conducir' => $request->input('licencia_conducir'),
             'hacer_user' => $request->input('hacer_user'),
+            'disponible' => $request->input('disponible'),
+
         ]);
 
         // Retornar la respuesta en formato JSON
@@ -150,28 +154,38 @@ class ConductorController extends Controller
     // }
 
     public function filter(Request $request)
-{
-    $query = Conductor::query();
-    
-    // Filtrar por licencia de conducir si se proporciona
-    if ($request->has('licencia_conducir') && $request->input('licencia_conducir') != '') {
-        $query->where('licencia_conducir', 'like', '%' . $request->input('licencia_conducir') . '%');
+    {
+        $query = Conductor::query();
+        
+        // Filtrar por licencia de conducir si se proporciona
+        if ($request->has('licencia_conducir') && $request->input('licencia_conducir') != '') {
+            $query->where('licencia_conducir', 'like', '%' . $request->input('licencia_conducir') . '%');
+        }
+        
+        // Filtrar por persona_id si se proporciona (comparación exacta)
+        if ($request->has('persona_id') && $request->input('persona_id') != '') {
+            $query->where('persona_id', '=', $request->input('persona_id'));
+        }
+        
+        // Filtrar por disponibilidad si se proporciona
+        if ($request->has('disponible')) {
+            // Asegúrate de que el valor sea un booleano
+            $disponible = filter_var($request->input('disponible'), FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+            if ($disponible !== null) {
+                $query->where('disponible', $disponible);
+            }
+        }
+        
+        // Obtener los resultados filtrados
+        $conductores = $query->get();
+        
+        return response()->json([
+            'msg' => [
+                'summary' => 'Consulta filtrada de conductores',
+                'detail' => 'Los conductores se consultaron correctamente según el filtro aplicado.',
+            ],
+            'data' => $conductores
+        ]);
     }
     
-    // Filtrar por id_persona si se proporciona (comparación exacta)
-    if ($request->has('persona_id') && $request->input('persona_id') != '') {
-        $query->where('persona_id', '=', $request->input('persona_id'));
-    }
-    
-    // Obtener los resultados filtrados
-    $conductores = $query->get();
-    
-    return response()->json([
-        'msg' => [
-            'summary' => 'Consulta filtrada de conductores',
-            'detail' => 'Los conductores se consultaron correctamente según el filtro aplicado.',
-        ],
-        'data' => $conductores
-    ]);
-}
 }

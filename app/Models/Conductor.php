@@ -17,7 +17,8 @@ class Conductor extends Model
         'estado_id',
         'persona_id',
         'licencia_conducir', 
-        'hacer_user'
+        'hacer_user',
+        'disponible'
     ];
 
     public function persona()

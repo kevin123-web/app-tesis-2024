@@ -15,6 +15,7 @@ class Usuario extends Model
 
     protected $fillable = [
         'rol_id',
+        'departamento_id',
         'nombre_usuario', 
         'nombre', 'email', 
         'contrasena'
@@ -28,5 +29,15 @@ class Usuario extends Model
     public function roles()
     {
         return $this->belongsToMany(Rol::class);
+    }
+
+    public function departamentos()
+    {
+        return $this->belongsTo(Departamento::class);
+    }
+
+    public function auditoria()
+    {
+        return $this->hasMany(Auditoria::class);
     }
 }
