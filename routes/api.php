@@ -258,3 +258,6 @@ Route::delete('auditoria/{id}', [AuditoriaController::class, 'destroy']);
 
 //flitro de envios por estado y cliente
 Route::get('/envios/filters', [EnviosController::class, 'filter']);
+
+//filtro por envios de cliente_id
+Route::get('/envios', [EnviosController::class, 'index1']);

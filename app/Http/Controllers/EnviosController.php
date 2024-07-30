@@ -197,5 +197,30 @@ class EnviosController extends Controller
         ]);
     }
     
-    
+    public function index1 (Request $request)
+    {
+        // Obtener el cliente_id del query string
+        $clienteId = $request->query('cliente_id');
+
+        // Construir la consulta base
+        $query = Envios::query();
+
+        // Si se proporciona cliente_id, aplicar el filtro
+        if ($clienteId) {
+            $query->where('cliente_id', $clienteId);
+        }
+
+        // Ejecutar la consulta y obtener los resultados
+        $envios = $query->get();
+
+        // Retornar la respuesta en formato JSON
+        return response()->json([
+            'msg' => [
+                'summary' => 'Envíos recuperados',
+                'detail' => 'Los envíos fueron recuperados correctamente.',
+            ],
+            'data' => $envios
+        ]);
+    }
+
 }
