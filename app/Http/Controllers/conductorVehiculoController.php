@@ -70,23 +70,25 @@ class conductorVehiculoController extends Controller
 
     public function update(Request $request, $id)
     {
+        // Buscar el registro por ID
         $conductorVehiculo = conductorVehiculo::findOrFail($id);
-
-        // Validación para todos los campos, pero permitiendo que algunos sean opcionales
+    
+        // Validación para todos los campos, permitiendo que algunos sean opcionales
         $validatedData = $request->validate([
             'conductor_id' => 'sometimes|integer|exists:conductor,id',
             'vehiculo_id' => 'sometimes|integer|exists:vehiculo,id',
         ]);
-
+    
         // Actualizar solo los campos que están presentes en la solicitud
-        $conductor_vehiculo->update($validatedData);
-
+        $conductorVehiculo->update($validatedData);
+    
+        // Responder con un mensaje y los datos actualizados
         return response()->json([
             'msg' => [
                 'summary' => 'Asignación de vehículo actualizada',
                 'detail' => 'Los datos de la asignación de vehículo se actualizaron correctamente.',
             ],
-            'data' => $conductor_vehiculo
+            'data' => $conductorVehiculo
         ]);
     }
 

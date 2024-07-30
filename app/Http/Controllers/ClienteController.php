@@ -43,23 +43,22 @@ class ClienteController extends Controller
             'data' => $clientes
         ]);
     }
-
+    
     public function store(Request $request)
     {
         // Validar los datos de entrada
         $request->validate([
             'persona_id' => 'required|integer|exists:persona,id',
-            // 'fecha_registro' => 'required|date',
             'tipo_cliente' => 'required|string|max:255',
         ]);
-
+    
         // Crear la nueva asignación
         $clientes = Cliente::create([
             'persona_id' => $request->input('persona_id'),
-            // 'fecha_registro' => $request->input('fecha_registro'),
+            'fecha_registro' => now(), // Establecer la fecha de registro como la fecha y hora actual
             'tipo_cliente' => $request->input('tipo_cliente'),
         ]);
-
+    
         // Retornar la respuesta en formato JSON
         return response()->json([
             'msg' => [
@@ -69,6 +68,7 @@ class ClienteController extends Controller
             'data' => $clientes
         ], 201);
     }
+    
 
     public function update(Request $request, $id)
     {
