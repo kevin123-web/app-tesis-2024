@@ -35,7 +35,6 @@ use App\Http\Controllers\AuditoriaController;
 
 
 
-
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -261,3 +260,6 @@ Route::get('/envios/filters', [EnviosController::class, 'filter']);
 
 //filtro por envios de cliente_id
 Route::get('/envios', [EnviosController::class, 'index1']);
+
+//login
+Route::post('/login', [UsuarioController::class, 'login']);

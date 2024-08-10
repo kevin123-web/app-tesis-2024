@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use App\Models\Usuario;
+use Illuminate\Validation\ValidationException;
+
 
 class UsuarioController extends Controller
 {
@@ -62,8 +66,8 @@ class UsuarioController extends Controller
             'nombre_usuario' => $request->input('nombre_usuario'),
             'nombre' => $request->input('nombre'),
             'email' => $request->input('email'),
-            'contrasena' => $request->input('contrasena'),
-        ]);
+            'contrasena' => Hash::make($request->input('contrasena'))       
+         ]);
 
         // Retornar la respuesta en formato JSON
         return response()->json([
@@ -116,6 +120,50 @@ class UsuarioController extends Controller
                 'detail' => 'El usuario se eliminó correctamente.',
             ],
             'data' => $usuarios
+        ]);
+    }
+
+    public function login(Request $request)
+    {
+        // Validar los datos de entrada
+        $validator = Validator::make($request->all(), [
+            'nombre_usuario' => 'required|string',
+            'contrasena' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'msg' => [
+                    'summary' => 'Datos inválidos',
+                    'detail' => 'Los datos proporcionados son incorrectos.',
+                ],
+                'data' => null
+            ], 400);
+        }
+
+        // Buscar al usuario por nombre_usuario
+        $usuario = Usuario::where('nombre_usuario', $request->input('nombre_usuario'))->first();
+
+        if (!$usuario || !Hash::check($request->input('contrasena'), $usuario->contrasena)) {
+            return response()->json([
+                'msg' => [
+                    'summary' => 'Autenticación fallida',
+                    'detail' => 'Nombre de usuario o contraseña incorrectos.',
+                ],
+                'data' => null
+            ], 401);
+        }
+
+        // Devolver los datos del usuario junto con el rol
+        return response()->json([
+            'msg' => [
+                'summary' => 'Inicio de sesión exitoso',
+                'detail' => 'El usuario ha iniciado sesión correctamente.',
+            ],
+            'data' => [
+                'usuario' => $usuario,
+                'rol' => $usuario->rol_id, // Asumiendo que `rol_id` es el rol del usuario
+            ]
         ]);
     }
 }
