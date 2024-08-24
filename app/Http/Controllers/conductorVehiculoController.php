@@ -10,7 +10,7 @@ class conductorVehiculoController extends Controller
 {
     public function index()
     {
-        $conductor_vehiculo = conductorVehiculo::get();
+        $conductor_vehiculo = conductorVehiculo::with(['conductor', 'vehiculo'])->get();
         return response()->json(
             [
                 'msg' => [
@@ -24,7 +24,7 @@ class conductorVehiculoController extends Controller
 
     public function show($id)
     {
-        $conductor_vehiculo = conductorVehiculo::find($id);
+        $conductor_vehiculo = conductorVehiculo::with(['conductor', 'vehiculo'])->find($id);
         if (!$conductor_vehiculo) {
             return response()->json([
                 'msg' => [

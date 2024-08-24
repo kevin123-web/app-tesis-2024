@@ -195,7 +195,7 @@ class DatabaseSeeder extends Seeder
             Auditoria::create([
                 'usuario_id' => random_int(1, 3), 
                 'envio_id' => random_int(1, 3),
-                'descripcion' => $faker->sentence(), 
+                'descripcion' => $faker->word, 
             ]);
         }
 

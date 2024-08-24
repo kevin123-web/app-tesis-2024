@@ -10,7 +10,7 @@ class RutaController extends Controller
 {
     public function index()
     {
-        $rutas = Ruta::all();
+        $rutas = Ruta::with(['ubicacionOrigen', 'ubicacionDestino'])->get();
         return response()->json(
             [
                 'msg' => [
