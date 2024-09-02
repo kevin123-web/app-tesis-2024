@@ -30,7 +30,14 @@ class EnviosController extends Controller
 
     public function show($id)
     {
-        $envio = Envios::find($id);
+        $envio = Envios::with([
+            'cliente.persona', 
+            'asignacion' => function($query) {
+                $query->with(['ruta','ConductorVehiculo']);
+            },
+            'servicio', 
+            'estado'
+            ])->find($id);
         if (!$envio) {
             return response()->json([
                 'msg' => [
