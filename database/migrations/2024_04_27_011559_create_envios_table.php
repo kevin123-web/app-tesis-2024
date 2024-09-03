@@ -33,6 +33,9 @@ class CreateEnviosTable extends Migration
 
             $table->string('prioridad');
 
+            $table->double('precio',800, 2)
+            ->default(0);
+
         });
     }
 

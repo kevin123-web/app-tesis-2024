@@ -32,6 +32,8 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\NotificacionesController;
 use App\Http\Controllers\DepartamentoController;
 use App\Http\Controllers\AuditoriaController;
+use App\Http\Controllers\TarifaController;
+
 
 
 
@@ -263,3 +265,10 @@ Route::get('/envios', [EnviosController::class, 'index1']);
 
 //login
 Route::post('/login', [UsuarioController::class, 'login']);
+
+//tarifa
+Route::get('tarifa', [TarifaController::class, 'index']); 
+Route::get('tarifa/{id}', [TarifaController::class, 'show']);
+Route::post('tarifa', [TarifaController::class, 'store']);
+Route::put('tarifa/{id}', [TarifaController::class, 'update']);
+Route::delete('tarifa/{id}', [TarifaController::class, 'destroy']);

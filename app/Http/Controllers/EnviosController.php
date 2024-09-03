@@ -70,6 +70,8 @@ class EnviosController extends Controller
             'fecha_recogida' => 'required|date',
             'fecha_entrega' => 'required|date',
             'prioridad' => 'required|string',
+            'precio' => 'required|numeric|regex:/^[\d]{0,11}(\.[\d]{1,2})?$/',
+
         ]);
 
         // Crear el nuevo envío
@@ -83,6 +85,7 @@ class EnviosController extends Controller
             'fecha_recogida' => $request->input('fecha_recogida'),
             'fecha_entrega' => $request->input('fecha_entrega'),
             'prioridad' => $request->input('prioridad'),
+            'precio' => $request->input('precio'),
         ]);
 
         // Retornar la respuesta en formato JSON
@@ -110,6 +113,8 @@ class EnviosController extends Controller
             'fecha_recogida' => 'sometimes|date',
             'fecha_entrega' => 'sometimes|date',
             'prioridad' => 'required|string',
+            'precio' => 'required|numeric|regex:/^[\d]{0,11}(\.[\d]{1,2})?$/',
+
         ]);
 
         // Actualizar solo los campos que están presentes en la solicitud

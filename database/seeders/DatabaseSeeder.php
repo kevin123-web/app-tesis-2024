@@ -30,6 +30,8 @@ use App\Models\usuarioRol;
 use App\Models\Notificaciones;
 use App\Models\Departamento;
 use App\Models\Auditoria;
+use App\Models\Tarifa;
+
 
 use Faker\Factory as Faker; 
 
@@ -142,7 +144,8 @@ class DatabaseSeeder extends Seeder
                 'peso_mercancia' => $faker->randomFloat(2, 0, 800), 
                 'fecha_recogida' => $faker->date(), 
                 'fecha_entrega' => $faker->date(),
-                'prioridad' => $faker->sentence()
+                'prioridad' => $faker->sentence(),
+                'precio' => $faker->randomFloat(2, 0, 800)
             ]);
         }
 
@@ -196,6 +199,13 @@ class DatabaseSeeder extends Seeder
                 'usuario_id' => random_int(1, 3), 
                 'envio_id' => random_int(1, 3),
                 'descripcion' => $faker->word, 
+            ]);
+        }
+
+        for ($i = 0; $i < 3; $i++) {
+            Tarifa::create([
+                'tipo_vehiculo_id' => random_int(1, 3), 
+                'valor' => $faker->randomFloat(2, 0, 800), 
             ]);
         }
 

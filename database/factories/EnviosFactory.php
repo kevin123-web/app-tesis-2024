@@ -21,6 +21,8 @@ class EnviosFactory extends Factory
             'peso_mercancia' => $this->faker->randomFloat(2, 0, 800),
             'fecha_recogida' => Carbon::now(),
             'fecha_entrega' => Carbon::now(),
+            'precio' => $this->faker->randomFloat(2, 0, 800),
+
 
         ];
     }

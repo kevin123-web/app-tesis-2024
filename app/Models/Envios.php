@@ -23,6 +23,7 @@ class Envios extends Model
         'fecha_recogida', 
         'fecha_entrega',
         'prioridad',
+        'precio',
     ];
 
     public function cliente()

@@ -6,24 +6,20 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class tipoVehiculo extends Model
+class Tarifa extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    
-    protected $table = 'tipo_vehiculo';
+
+    protected $table = 'tarifa';
 
     protected $fillable = [
-        'nombre',
+        'tipo_vehiculo_id',
+        'valor',
     ];
 
-    public function vehiculos()
+    public function TipoVehiculo()
     {
-        return $this->hasMany(Vehiculo::class);
-    }
-
-    public function tarifas()
-    {
-        return $this->hasMany(Tarifa::class);
+        return $this->belongsTo(tipoVehiculo::class);
     }
 }
